@@ -15,5 +15,14 @@
 	<version>1.0</version>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-	</dependencies>
-</project>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>ejb</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>de.fh_fortmund.cw.kniffel</groupId>
+			<artifactId>model</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies></project>
