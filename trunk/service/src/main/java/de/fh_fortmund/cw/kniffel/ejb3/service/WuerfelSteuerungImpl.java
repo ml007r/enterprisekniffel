@@ -11,6 +11,10 @@ public class WuerfelSteuerungImpl implements WuerfelSteuerung{
 	 * Wuerfel im Spiel (Final!)
 	 */
 	private final Wuerfel[] wuerfel = new Wuerfel[5];
+	
+	public WuerfelSteuerungImpl() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/*
 	 * (non-Javadoc)

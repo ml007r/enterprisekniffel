@@ -3,6 +3,7 @@ package de.fh_fortmund.cw.kniffel.ejb3.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
 import de.fh_fortmund.cw.kniffel.model.KniffelZettel;
@@ -16,10 +17,20 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * .getLog(KniffelSteuerungImpl.class);
 	 */
 
+	@EJB
+	WuerfelSteuerung wuerfelSteuerung;
+	
 	/**
 	 * Das aktuelle Spiel
 	 */
 	private KniffelZettel spiel;
+	
+	/**
+	 * 
+	 */
+	public KniffelSteuerungImpl() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/*
 	 * (non-Javadoc)
