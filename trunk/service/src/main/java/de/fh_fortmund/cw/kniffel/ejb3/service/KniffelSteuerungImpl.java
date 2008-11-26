@@ -21,6 +21,13 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 */
 	private KniffelZettel spiel;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#erstelleNeuesSpiel
+	 * (int)
+	 */
 	public KniffelZettel erstelleNeuesSpiel(int spielerAnzahl) {
 		List<Spieler> spielerList = new ArrayList<Spieler>(spielerAnzahl);
 		this.spiel = new KniffelZettel(spielerList);
