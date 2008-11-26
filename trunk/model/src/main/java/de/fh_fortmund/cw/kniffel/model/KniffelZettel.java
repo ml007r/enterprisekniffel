@@ -1,6 +1,5 @@
 package de.fh_fortmund.cw.kniffel.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class KniffelZettel {
 	 * 
 	 * @param spielerAnzahl
 	 */
-	public KniffelZettel(ArrayList<Spieler> spieler) {
+	public KniffelZettel(List<Spieler> spieler) {
 		this.spielBeginn = new Date();
 		this.spieler = spieler;
 		this.aktuellerSpieler = spieler.get(0);
