@@ -29,7 +29,7 @@ public class WuerfelSteuerungImpl implements WuerfelSteuerung{
 	 * (non-Javadoc)
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#diceSelected(int[])
 	 */
-	public void diceSelected(int[] cubes) {
+	public void diceSelected() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -56,7 +56,7 @@ public class WuerfelSteuerungImpl implements WuerfelSteuerung{
 	 * (non-Javadoc)
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#lockCubes(int[])
 	 */
-	public void lockCubes(int[] cubes) {
+	public void lockCube(int cube) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -65,7 +65,7 @@ public class WuerfelSteuerungImpl implements WuerfelSteuerung{
 	 * (non-Javadoc)
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#unlockCubes(int[])
 	 */
-	public void unlockCubes(int[] cubes) {
+	public void unlockCube(int cube) {
 		// TODO Auto-generated method stub
 		
 	}
