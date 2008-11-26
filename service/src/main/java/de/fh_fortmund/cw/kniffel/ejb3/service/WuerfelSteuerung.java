@@ -32,19 +32,19 @@ public interface WuerfelSteuerung {
 	 * 
 	 * @param cubes
 	 */
-	public void diceSelected(int[] cubes);
+	public void diceSelected();
 
 	/**
 	 * Sperrt die markierten WŸrfel.
 	 * 
-	 * @param cubes
+	 * @param cube
 	 */
-	public void lockCubes(int[] cubes);
+	public void lockCube(int cube);
 
 	/**
 	 * 
-	 * @param cubes
+	 * @param cube
 	 */
-	public void unlockCubes(int[] cubes);
+	public void unlockCube(int cube);
 
 }

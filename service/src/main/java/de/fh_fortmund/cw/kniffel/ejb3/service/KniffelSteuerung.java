@@ -19,6 +19,34 @@ public interface KniffelSteuerung {
 	 */
 	public KniffelZettel erstelleNeuesSpiel(int spielerAnzahl);
 
+	
+	/**
+	 * WŸrfelt alle WŸrfel.
+	 */
+	public void diceAll();
+
+	/**
+	 * WŸrfelt die markierten WŸrfel
+	 * 
+	 * @param cubes
+	 */
+	public void diceSelected();
+
+	/**
+	 * Sperrt die markierten WŸrfel.
+	 * 
+	 * @param cube
+	 */
+	public void lockCube(int cube);
+
+	/**
+	 * 
+	 * @param cube
+	 */
+	public void unlockCube(int cube);
+	
+	
+	
 	/**
 	 * 
 	 */

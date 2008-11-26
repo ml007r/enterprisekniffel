@@ -34,6 +34,44 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 
 	/*
 	 * (non-Javadoc)
+	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#diceAll()
+	 */
+	public void diceAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#diceSelected(int[])
+	 */
+	public void diceSelected() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#lockCubes(int[])
+	 */
+	public void lockCube(int cube) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#unlockCubes(int[])
+	 */
+	public void unlockCube(int cube) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	/*
+	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#erstelleNeuesSpiel
