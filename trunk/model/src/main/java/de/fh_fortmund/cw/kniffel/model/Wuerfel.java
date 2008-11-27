@@ -1,5 +1,10 @@
 package de.fh_fortmund.cw.kniffel.model;
 
+/**
+ * 
+ * @author tbs
+ *
+ */
 public class Wuerfel {
 
 	private Integer wert;

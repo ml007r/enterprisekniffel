@@ -1,7 +1,9 @@
 package de.fh_fortmund.cw.kniffel.model;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -12,6 +14,8 @@ public class KniffelZettel {
 
 	private Date spielBeginn;
 
+	private Map<Spieler, KniffelSpalte> spielerMap;
+
 	private List<Spieler> spieler;
 
 	private Spieler aktuellerSpieler;
@@ -21,32 +25,28 @@ public class KniffelZettel {
 	 * verboten.
 	 */
 	protected KniffelZettel() {
+		this.spielBeginn = new Date();
+		this.spielerMap = new HashMap<Spieler, KniffelSpalte>();
 	}
 
 	/**
 	 * 
 	 * @param spielerAnzahl
 	 */
-	public KniffelZettel(List<Spieler> spieler) {
-		this.spielBeginn = new Date();
-		this.spieler = spieler;
-		this.aktuellerSpieler = spieler.get(0);
+	public KniffelZettel(List<Spieler> spielerList) {
+		this.aktuellerSpieler = spielerList.get(0);
+		this.spieler = spielerList;
+		for (Spieler s : spielerList) {
+			spielerMap.put(s, new KniffelSpalte(s));
+		}
 	}
 
 	public Date getSpielBeginn() {
 		return spielBeginn;
 	}
 
-	protected void setSpielBeginn(Date spielBeginn) {
-		this.spielBeginn = spielBeginn;
-	}
-
 	public List<Spieler> getSpieler() {
 		return spieler;
-	}
-
-	protected void setSpieler(List<Spieler> spieler) {
-		this.spieler = spieler;
 	}
 
 	public Spieler getAktuellerSpieler() {
@@ -56,5 +56,4 @@ public class KniffelZettel {
 	public void setAktuellerSpieler(Spieler aktuellerSpieler) {
 		this.aktuellerSpieler = aktuellerSpieler;
 	}
-
 }
