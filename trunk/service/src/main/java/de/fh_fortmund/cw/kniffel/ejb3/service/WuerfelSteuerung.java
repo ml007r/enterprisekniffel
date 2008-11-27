@@ -2,7 +2,7 @@ package de.fh_fortmund.cw.kniffel.ejb3.service;
 
 /**
  * Braucht kein [at]Remote, da der Zugriff nur innerhalb des Containers von der
- * Spielsteuerung zulŠssig ist.
+ * Spielsteuerung zulï¿½ssig ist.
  * 
  * @author tbs
  * 
@@ -26,21 +26,31 @@ public interface WuerfelSteuerung {
 	 * @return
 	 */
 	public int[] getAllCubeValues();
+	
+	/**
+	 * Summiert alle WÃ¼rfel mit der Suchzahl
+	 * 
+	 * searchFor = 1 (Summiere alle 1er)
+	 * 
+	 * @param searchFor
+	 * @return
+	 */
+	public int getCubeSum(int searchFor);
 
 	/**
-	 * WŸrfelt alle WŸrfel.
+	 * Wï¿½rfelt alle Wï¿½rfel.
 	 */
 	public void diceAll();
 
 	/**
-	 * WŸrfelt die markierten WŸrfel
+	 * Wï¿½rfelt die markierten Wï¿½rfel
 	 * 
 	 * @param cubes
 	 */
 	public void diceSelected();
 
 	/**
-	 * Sperrt die markierten WŸrfel.
+	 * Sperrt die markierten Wï¿½rfel.
 	 * 
 	 * @param cube
 	 */
