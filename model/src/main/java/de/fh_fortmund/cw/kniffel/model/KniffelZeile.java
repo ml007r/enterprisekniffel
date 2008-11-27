@@ -5,27 +5,18 @@ package de.fh_fortmund.cw.kniffel.model;
  * @author tbs
  * 
  */
-public class KniffelZeile {
+public enum KniffelZeile {
 
-	private String name;
+	// Obere Hälfte
+	ONE, TWO, THREE, FOUR, FIVE, SIX,
 
-	/**
-	 * Zeilen brauchen immer eine Bezeichnung, daher ist der leere Konstruktor
-	 * verboten.
-	 */
-	protected KniffelZeile() {
-	}
+	// Obere Hälfte: Bonus & Summe
+	SUM_TOP, BONUS_TOP, SUM_TOP_TOTAL,
 
-	public KniffelZeile(String name) {
-		this.name = name;
-	}
+	// Untere Hälfte
+	THREE_OAK, FOUR_OAK, FULL_HOUSE, STREET_1, STREET_2, YAHTZEE, CHANCE,
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	// Untere Hälfte: Summe + GesamtSumme
+	SUM_BOTTOM, SUM_TOTAL
+	
 }
