@@ -8,6 +8,11 @@ package de.fh_fortmund.cw.kniffel.ejb3.service;
  * 
  */
 public interface WuerfelSteuerung {
+	/**
+	 * 
+	 * @return
+	 */
+	public int dice();
 
 	/**
 	 * 
