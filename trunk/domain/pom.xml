@@ -29,28 +29,30 @@
 					<displayName>Kniffel EAR</displayName>
 					<description></description>
 					<modules>
-						<ejbModule>
+						<jarModule>
 							<groupId>${groupId}</groupId>
 							<artifactId>model</artifactId>
-							<bundleFileName>${pom.parent.artifactId}-model-${version}.jar</bundleFileName>
-						</ejbModule>
-						<ejbModule>
-							<groupId>${groupId}</groupId>
+							<bundleFileName>model-${version}.jar</bundleFileName>
+						</jarModule>
+
+						<!--
+							ejbModule> <groupId>${groupId}</groupId>
 							<artifactId>integration</artifactId>
 							<bundleFileName>${pom.parent.artifactId}-integration-${version}.jar</bundleFileName>
-						</ejbModule>
+							</ejbModule
+						-->
+
 						<ejbModule>
 							<groupId>${groupId}</groupId>
 							<artifactId>service</artifactId>
-							<bundleFileName>${pom.parent.artifactId}-service-${version}.jar</bundleFileName>
+							<bundleFileName>service-${version}.jar</bundleFileName>
 						</ejbModule>
 						<webModule>
 							<groupId>${groupId}</groupId>
 							<artifactId>webclient-gwt</artifactId>
-							<contextRoot>/</contextRoot>
-							<bundleFileName>
-								${pom.parent.artifactId}-webclient-${version}.war
-							</bundleFileName>
+							<!--contextRoot>/</contextRoot-->
+							<contextRoot>/de.fh_dortmund.cw.kniffel.Kniffel</contextRoot>
+							<bundleFileName>webclient-${version}.war</bundleFileName>
 						</webModule>
 					</modules>
 					<archive>
@@ -59,21 +61,43 @@
 					<finalName>${pom.parent.artifactId}</finalName>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<tasks name="deploy">
+								<property name="jar.name" value="${pom.parent.artifactId}.ear" />
+								<property name="build.jar.file" value="${basedir}/target/${jar.name}" />
+								<property name="jar.deploy.name"
+									value="${env.GLASSFISH_HOME}/domains/domain1/autodeploy/${jar.name}" />
+								<echo>Deploy ${build.jar.file} -> ${jar.deploy.name}</echo>
+								<copy file="${build.jar.file}" tofile="${jar.deploy.name}" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
 		</plugins>
 	</build>
 
 	<dependencies>
-		<dependency>
-			<groupId>de.fh_fortmund.cw.kniffel</groupId>
-			<artifactId>integration</artifactId>
-			<version>1.0</version>
-			<type>ejb</type>
-		</dependency>
+		<!--
+			dependency> <groupId>de.fh_fortmund.cw.kniffel</groupId>
+			<artifactId>integration</artifactId> <version>1.0</version>
+			<type>ejb</type> </dependency
+		-->
 		<dependency>
 			<groupId>de.fh_fortmund.cw.kniffel</groupId>
 			<artifactId>model</artifactId>
 			<version>1.0</version>
-			<type>ejb</type>
+			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>de.fh_fortmund.cw.kniffel</groupId>
