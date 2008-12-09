@@ -33,10 +33,11 @@ public class Kniffel implements EntryPoint {
 		// AJAX Service
 		kniffelService = (KniffelServiceAsync) GWT.create(KniffelService.class);
 		ServiceDefTarget target = (ServiceDefTarget) kniffelService;
-		target.setServiceEntryPoint("/de.fh_dortmund.cw.kniffel.Kniffel/Kniffel");
+		// target.setServiceEntryPoint("/de.fh_dortmund.cw.kniffel.Kniffel/Kniffel");
+		target.setServiceEntryPoint("/Kniffel");
 
 		spielerPanel.add(new SpielerAnzahlWidget());
-		spielPanel.setVisible(true);
+		spielerPanel.setVisible(true);
 	}
 
 	/**
