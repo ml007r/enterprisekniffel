@@ -43,12 +43,20 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    	<dependency>
+			<groupId>javax</groupId>
+			<artifactId>ejb</artifactId>
+			<version>3.0</version>
+			<scope>provided</scope>
+		</dependency>
+    
   </dependencies>
   <modules>
     <module>domain</module>
     <module>model</module>
-    <module>integration</module>
+    <!--module>integration</module-->
     <module>service</module>
     <module>webclient-gwt</module>
   </modules>
+  
 </project>
