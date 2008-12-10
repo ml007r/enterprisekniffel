@@ -1,60 +1,62 @@
 package de.fh_dortmund.cw.kniffel.client.widgets;
 
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+
+import de.fh_dortmund.cw.kniffel.client.Kniffel;
 
 /**
  * 
  * @author tbs
  * 
  */
-public class SpielerAnzahlWidget extends SimplePanel {
+public class SpielerAnzahlWidget extends HorizontalPanel {
 
-	private Label label = new Label();
-
-	private TextBox textbox = new TextBox();
-
-	private Button startButton = new Button();
-
-	/**
-	 * 
-	 */
 	public SpielerAnzahlWidget() {
 
 		// Label
-		label.setText("Spieleranzahl:");
-		label.setVisible(true);
+		Label label = new Label("Spieleranzahl:");
 
 		// Eingabe der Spieleranzahl
+		final TextBox textbox = new TextBox();
+		textbox.setText("1");
+		textbox.setMaxLength(1);
 		textbox.addChangeListener(new ChangeListener() {
 			public void onChange(Widget arg0) {
 
 			}
 		});
-		textbox.setMaxLength(1);
-		textbox.setVisible(true);
 
 		// Spiel starten
-		startButton.setText("Spiel Starten!");
+		final Button startButton = new Button("Spiel Starten!");
 		startButton.addClickListener(new ClickListener() {
 			public void onClick(Widget arg0) {
-				Window.alert("Juhuu");
+				Kniffel.getKniffelService().erstelleNeuesSpiel(
+						Integer.parseInt(textbox.getText()),
+						new AsyncCallback<Void>() {
+							public void onFailure(Throwable arg0) {
+								Window.alert(arg0.getMessage());
+							}
+
+							public void onSuccess(Void arg0) {
+								// 
+								textbox.setReadOnly(true);
+								startButton.setVisible(false);
+							}
+						});
 			}
 		});
-		startButton.setVisible(true);
 
 		// Allgemeine Einstellungen des Panels
 		this.add(label);
 		this.add(textbox);
 		this.add(startButton);
-		
-		this.setSize("1000", "50");
-		this.setVisible(true);
 	}
 }

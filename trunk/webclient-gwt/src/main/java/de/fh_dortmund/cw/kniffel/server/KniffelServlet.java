@@ -3,13 +3,13 @@ package de.fh_dortmund.cw.kniffel.server;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.fh_dortmund.cw.kniffel.client.rpc.KniffelService;
-import de.fh_fortmund.cw.kniffel.model.KniffelZettel;
 
 /**
  * 
  * @author tbs
  * 
  */
+@SuppressWarnings("serial")
 public class KniffelServlet extends RemoteServiceServlet implements
 		KniffelService {
 
@@ -23,12 +23,12 @@ public class KniffelServlet extends RemoteServiceServlet implements
 		
 	}
 
-	public KniffelZettel erstelleNeuesSpiel(int spielerAnzahl) {
+	public void erstelleNeuesSpiel(int spielerAnzahl) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
-	public KniffelZettel getKniffelZettel() {
+	public Integer[][] getKniffelZettel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -107,5 +107,7 @@ public class KniffelServlet extends RemoteServiceServlet implements
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }

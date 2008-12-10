@@ -2,8 +2,6 @@ package de.fh_dortmund.cw.kniffel.client.rpc;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 
-import de.fh_fortmund.cw.kniffel.model.KniffelZettel;
-
 /**
  * 
  * @author tbs
@@ -11,7 +9,7 @@ import de.fh_fortmund.cw.kniffel.model.KniffelZettel;
  */
 public interface KniffelService extends RemoteService {
 
-	//KniffelZettel erstelleNeuesSpiel(int spielerAnzahl);
+	void erstelleNeuesSpiel(int spielerAnzahl);
 
 	void diceAll();
 
@@ -47,5 +45,5 @@ public interface KniffelService extends RemoteService {
 
 	void setChance();
 
-	//KniffelZettel getKniffelZettel();
+	Integer[][] getKniffelZettel();
 }
