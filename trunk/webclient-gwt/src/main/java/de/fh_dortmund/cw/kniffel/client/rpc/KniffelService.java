@@ -9,10 +9,21 @@ import com.google.gwt.user.client.rpc.RemoteService;
  */
 public interface KniffelService extends RemoteService {
 
+	/**
+	 * 
+	 * 
+	 * @param spielerAnzahl
+	 */
 	void erstelleNeuesSpiel(int spielerAnzahl);
 
+	/**
+	 * 
+	 */
 	void diceAll();
 
+	/**
+	 * 
+	 */
 	void diceSelected();
 
 	void lockCube(int cube);
