@@ -11,12 +11,60 @@
 	<groupId>de.fh_fortmund.cw.kniffel</groupId>
 	<artifactId>webclient-gwt</artifactId>
 	<packaging>war</packaging>
-	<name>webclient-gwt Maven Webapp</name>
+	<name>webclient-gwt</name>
 	<version>1.0</version>
 	<url>http://maven.apache.org</url>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>gwt-maven</id>
+			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<repositories>
+		<repository>
+			<id>gwt-maven</id>
+			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo</url>
+		</repository>
+	</repositories>
+
+	<properties>
+		<gwtVersion>1.5.3</gwtVersion>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>gwt-dev-windows</id>
+			<properties>
+				<platform>windows</platform>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+		</profile>
+		<profile>
+			<id>gwt-dev-mac</id>
+			<properties>
+				<platform>mac</platform>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+		</profile>
+	</profiles>
+
 	<build>
 		<finalName>webclient-gwt</finalName>
+
 		<plugins>
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
@@ -24,7 +72,7 @@
 				<executions>
 					<execution>
 						<configuration>
-							<servicePattern>**/*Service.java</servicePattern>
+							<servicePattern>**/rpc/*Service.java</servicePattern>
 						</configuration>
 						<goals>
 							<goal>generateAsync</goal>
@@ -32,6 +80,8 @@
 					</execution>
 				</executions>
 			</plugin>
+
+
 			<plugin>
 				<groupId>com.totsp.gwt</groupId>
 				<artifactId>maven-googlewebtoolkit2-plugin</artifactId>
@@ -41,11 +91,6 @@
 					<compileTargets>
 						<value>de.fh_dortmund.cw.kniffel.Kniffel</value>
 					</compileTargets>
-
-					<!--
-						runTarget>de.fh_dortmund.cw.kniffel.Kniffel/Kniffel.html</runTarget
-					-->
-
 					<runTarget>Kniffel.html</runTarget>
 
 					<!-- use style OBF for prod -->
@@ -65,23 +110,33 @@
 				<executions>
 					<execution>
 						<goals>
-							<!--  plugin goals -->
-							<goal>mergewebxml</goal>
+							<!-- Funktioniert mit aktueller Plugin-Version nicht -->
+							<!--goal>generateClientBeans</goal-->
+
+							<!-- Ist fehlerhaft -->
+							<!--goal>mergewebxml</goal-->
+
 							<goal>compile</goal>
+
+							<!-- Hosted Mode -->
 							<!--goal>gwt</goal-->
+
+							<!-- TODO GwtTests -->
 							<!--goal>test</goal-->
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<webXml>target/web.xml</webXml>
+					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
 					<warSourceExcludes>.gwt-tmp/**</warSourceExcludes>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -108,6 +163,28 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- TODO kann man das eventuell ohne ant task lösen? -->
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>test</phase>
+						<configuration>
+							<tasks name="move">
+								<property name="destDir" value="${basedir}/target/webclient-gwt" />
+								<move todir="${destDir}">
+									<fileset dir="${destDir}/de.fh_dortmund.cw.kniffel.Kniffel" />
+								</move>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -162,39 +239,4 @@
 		</dependency>
 	</dependencies>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>gwt-maven</id>
-			<url>http://gwt-maven.googlecode.com/svn/trunk/mavenrepo
-			</url>
-		</pluginRepository>
-	</pluginRepositories>
-
-	<repositories>
-		<repository>
-			<id>gwt-maven</id>
-			<url>
-				http://gwt-maven.googlecode.com/svn/trunk/mavenrepo/
-       </url>
-		</repository>
-	</repositories>
-
-	<properties>
-		<gwtVersion>1.5.3</gwtVersion>
-	</properties>
-
-	<profiles>
-		<profile>
-			<id>gwt-dev-windows</id>
-			<properties>
-				<platform>windows</platform>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<os>
-					<family>windows</family>
-				</os>
-			</activation>
-		</profile>
-	</profiles>
 </project>
