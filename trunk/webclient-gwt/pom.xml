@@ -63,7 +63,17 @@
 	<build>
 		<finalName>webclient-gwt</finalName>
 
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>**/public/</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
 		<plugins>
+
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -72,10 +82,12 @@
 				<executions>
 					<execution>
 						<configuration>
-							<servicePattern>**/rpc/*Service.java</servicePattern>
+							<servicePattern>**/client/rpc/*Service.java</servicePattern>
+							<module>de.fh_dortmund.cw.kniffel.Kniffel</module>
 						</configuration>
 						<goals>
 							<goal>generateAsync</goal>
+							<!--goal>compile</goal-->
 						</goals>
 					</execution>
 				</executions>
@@ -92,36 +104,18 @@
 						<value>de.fh_dortmund.cw.kniffel.Kniffel</value>
 					</compileTargets>
 					<runTarget>Kniffel.html</runTarget>
-
-					<!-- use style OBF for prod -->
-					<style>DETAILED</style>
+					<style>DETAILED</style><!-- use style OBF for prod -->
 					<noServer>false</noServer>
 					<extraJvmArgs>-Xmx512m</extraJvmArgs>
-					<!--
-						this parameter is VERY important with automatic mode - has to
-						match the version in your declared deps
-					-->
-					<!--
-						if this is set incorrect, or left out and default does not match
-						(default is 1.5.1 for 2.0-beta22) you will have mysterious errors
-					-->
 					<gwtVersion>${gwtVersion}</gwtVersion>
 				</configuration>
 				<executions>
 					<execution>
 						<goals>
-							<!-- Funktioniert mit aktueller Plugin-Version nicht -->
 							<!--goal>generateClientBeans</goal-->
-
-							<!-- Ist fehlerhaft -->
 							<!--goal>mergewebxml</goal-->
-
 							<goal>compile</goal>
-
-							<!-- Hosted Mode -->
 							<!--goal>gwt</goal-->
-
-							<!-- TODO GwtTests -->
 							<!--goal>test</goal-->
 						</goals>
 					</execution>
@@ -227,16 +221,12 @@
 
 		<dependency>
 			<groupId>de.fh_fortmund.cw.kniffel</groupId>
-			<artifactId>model</artifactId>
-			<version>1.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>de.fh_fortmund.cw.kniffel</groupId>
 			<artifactId>service</artifactId>
 			<version>1.0</version>
+			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
+		
 	</dependencies>
 
 </project>

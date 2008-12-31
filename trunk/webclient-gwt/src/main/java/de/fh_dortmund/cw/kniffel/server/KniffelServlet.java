@@ -1,8 +1,15 @@
 package de.fh_dortmund.cw.kniffel.server;
 
+import java.util.List;
+
+import javax.ejb.EJB;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.fh_dortmund.cw.kniffel.client.rpc.KniffelService;
+import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
+import de.fh_dortmund.cw.kniffel.model.Wuerfel;
+import de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung;
 
 /**
  * 
@@ -13,101 +20,184 @@ import de.fh_dortmund.cw.kniffel.client.rpc.KniffelService;
 public class KniffelServlet extends RemoteServiceServlet implements
 		KniffelService {
 
-	public void diceAll() {
-		// TODO Auto-generated method stub
-		
+	@EJB
+	KniffelSteuerung kniffelSteuerung;
+
+	/**
+	 * 
+	 */
+	public KniffelServlet() {
+
 	}
 
-	public void diceSelected() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#createNewGame(java
+	 * .lang.Integer)
+	 */
+	public KniffelZettel createNewGame(Integer playerCount) {
+		return kniffelSteuerung.createNewGame(playerCount);
 	}
 
-	public void erstelleNeuesSpiel(int spielerAnzahl) {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#refresh()
+	 */
+	public KniffelZettel refresh() {
+		return kniffelSteuerung.refresh();
 	}
 
-	public Integer[][] getKniffelZettel() {
-		// TODO Auto-generated method stub
-		return null;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#dice()
+	 */
+	public List<Wuerfel> dice() {
+		return null; // kniffelSteuerung.dice();
 	}
 
-	public void lockCube(int cube) {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#lockCube(java.lang
+	 * .Integer)
+	 */
+	public void lockCube(Integer cubeId) {
+		kniffelSteuerung.lockCube(cubeId);
 	}
 
-	public void set1er() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#unlockCube(java.lang
+	 * .Integer)
+	 */
+	public void unlockCube(Integer cubeId) {
+		kniffelSteuerung.unlockCube(cubeId);
 	}
 
-	public void set2er() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set1er()
+	 */
+	public Integer set1er() {
+		return kniffelSteuerung.set1er();
 	}
 
-	public void set3er() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set2er()
+	 */
+	public Integer set2er() {
+		return kniffelSteuerung.set2er();
 	}
 
-	public void set4er() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set3er()
+	 */
+	public Integer set3er() {
+		return kniffelSteuerung.set3er();
 	}
 
-	public void set5er() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set4er()
+	 */
+	public Integer set4er() {
+		return kniffelSteuerung.set4er();
 	}
 
-	public void set6er() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set5er()
+	 */
+	public Integer set5er() {
+		return kniffelSteuerung.set5er();
 	}
 
-	public void setChance() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set6er()
+	 */
+	public Integer set6er() {
+		return kniffelSteuerung.set6er();
 	}
 
-	public void setDreierPasch() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setDreierPasch()
+	 */
+	public Integer setDreierPasch() {
+		return kniffelSteuerung.setDreierPasch();
 	}
 
-	public void setFullHouse() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setViererPasch()
+	 */
+	public Integer setViererPasch() {
+		return kniffelSteuerung.setViererPasch();
 	}
 
-	public void setGrosseStrasse() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setFullHouse()
+	 */
+	public Integer setFullHouse() {
+		return kniffelSteuerung.setFullHouse();
 	}
 
-	public void setKleineStrasse() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setKleineStrasse()
+	 */
+	public Integer setKleineStrasse() {
+		return kniffelSteuerung.setKleineStrasse();
 	}
 
-	public void setKniffel() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setGrosseStrasse()
+	 */
+	public Integer setGrosseStrasse() {
+		return kniffelSteuerung.setGrosseStrasse();
 	}
 
-	public void setViererPasch() {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setKniffel()
+	 */
+	public Integer setKniffel() {
+		return kniffelSteuerung.setKniffel();
 	}
 
-	public void unlockCube(int cube) {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setChance()
+	 */
+	public Integer setChance() {
+		return kniffelSteuerung.setChance();
 	}
-
-	
 
 }
