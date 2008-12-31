@@ -1,17 +1,24 @@
-package de.fh_fortmund.cw.kniffel.model;
+package de.fh_dortmund.cw.kniffel.model;
+
+import java.io.Serializable;
 
 /**
  * 
  * @author tbs
  * 
  */
-public class Spieler {
+public class Spieler implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3690412025188387040L;
 
 	private String name;
 
 	private KniffelSpalte spalte;
 
-	protected Spieler() {
+	public Spieler() {
 	}
 
 	public Spieler(String name) {

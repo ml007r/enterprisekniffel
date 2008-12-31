@@ -1,5 +1,6 @@
-package de.fh_fortmund.cw.kniffel.model;
+package de.fh_dortmund.cw.kniffel.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,12 @@ import java.util.Map;
  * @author tbs
  * 
  */
-public class KniffelZettel {
+public class KniffelZettel implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5398371425538431922L;
 
 	private Date spielBeginn;
 
@@ -23,8 +29,10 @@ public class KniffelZettel {
 	/**
 	 * Die Spieleranzahl ist immer wichtig, daher ist der leere Konstruktor
 	 * verboten.
+	 * 
+	 * für gwt muss ein leerer vorhanden sein :(
 	 */
-	protected KniffelZettel() {
+	public KniffelZettel() {
 		this.spielBeginn = new Date();
 		this.spielerMap = new HashMap<Spieler, KniffelSpalte>();
 	}
