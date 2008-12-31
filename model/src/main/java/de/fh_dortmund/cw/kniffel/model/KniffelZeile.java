@@ -1,11 +1,13 @@
-package de.fh_fortmund.cw.kniffel.model;
+package de.fh_dortmund.cw.kniffel.model;
+
+import java.io.Serializable;
 
 /**
  * 
  * @author tbs
  * 
  */
-public enum KniffelZeile {
+public enum KniffelZeile implements Serializable  {
 
 	// Obere Hälfte
 	ONE, TWO, THREE, FOUR, FIVE, SIX,

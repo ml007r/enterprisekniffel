@@ -1,5 +1,6 @@
-package de.fh_fortmund.cw.kniffel.model;
+package de.fh_dortmund.cw.kniffel.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,12 +9,21 @@ import java.util.Map;
  * @author tbs
  * 
  */
-public class KniffelSpalte {
+public class KniffelSpalte implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2708942749392862735L;
 
 	private Spieler spieler;
 
 	private Map<KniffelZeile, KniffelZelle> zellen;
 
+	public KniffelSpalte() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public KniffelSpalte(Spieler spieler) {
 		this.spieler = spieler;
 		this.zellen = new HashMap<KniffelZeile, KniffelZelle>();

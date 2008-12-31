@@ -1,4 +1,6 @@
-package de.fh_fortmund.cw.kniffel.model;
+package de.fh_dortmund.cw.kniffel.model;
+
+import java.io.Serializable;
 
 /**
  * 
@@ -6,7 +8,12 @@ package de.fh_fortmund.cw.kniffel.model;
  * @author tbs
  * 
  */
-public class KniffelZelle {
+public class KniffelZelle implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6487543873813983784L;
 
 	private Integer wert;
 
