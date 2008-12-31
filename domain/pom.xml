@@ -50,8 +50,7 @@
 						<webModule>
 							<groupId>${groupId}</groupId>
 							<artifactId>webclient-gwt</artifactId>
-							<!--contextRoot>/</contextRoot-->
-							<contextRoot>/de.fh_dortmund.cw.kniffel.Kniffel</contextRoot>
+							<contextRoot>/Kniffel</contextRoot>
 							<bundleFileName>webclient-${version}.war</bundleFileName>
 						</webModule>
 					</modules>
