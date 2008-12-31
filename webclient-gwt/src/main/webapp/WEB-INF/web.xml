@@ -3,4 +3,14 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 	<display-name>Archetype Created Web Application</display-name>
+	
+	<servlet>
+		<servlet-name>KniffelServlet</servlet-name>
+		<servlet-class>de.fh_dortmund.cw.kniffel.server.KniffelServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>KniffelServlet</servlet-name>
+		<url-pattern>/Kniffel</url-pattern>
+	</servlet-mapping>
 </web-app>

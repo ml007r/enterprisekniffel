@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 import de.fh_dortmund.cw.kniffel.client.Kniffel;
+import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
 
 /**
  * 
@@ -38,14 +39,14 @@ public class SpielerAnzahlWidget extends HorizontalPanel {
 		final Button startButton = new Button("Spiel Starten!");
 		startButton.addClickListener(new ClickListener() {
 			public void onClick(Widget arg0) {
-				Kniffel.getKniffelService().erstelleNeuesSpiel(
+				Kniffel.getKniffelService().createNewGame(
 						Integer.parseInt(textbox.getText()),
-						new AsyncCallback<Void>() {
+						new AsyncCallback<KniffelZettel>() {
 							public void onFailure(Throwable arg0) {
 								Window.alert(arg0.getMessage());
 							}
 
-							public void onSuccess(Void arg0) {
+							public void onSuccess(KniffelZettel arg0) {
 								// 
 								textbox.setReadOnly(true);
 								startButton.setVisible(false);

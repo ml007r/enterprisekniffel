@@ -1,6 +1,11 @@
 package de.fh_dortmund.cw.kniffel.client.rpc;
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.RemoteService;
+
+import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
+import de.fh_dortmund.cw.kniffel.model.Wuerfel;
 
 /**
  * 
@@ -11,50 +16,104 @@ public interface KniffelService extends RemoteService {
 
 	/**
 	 * 
-	 * 
-	 * @param spielerAnzahl
+	 * @param playerCount
+	 * @return
 	 */
-	void erstelleNeuesSpiel(int spielerAnzahl);
+	KniffelZettel createNewGame(Integer playerCount);
 
 	/**
 	 * 
+	 * @return
 	 */
-	void diceAll();
+	List<Wuerfel> dice();
 
 	/**
 	 * 
+	 * @param cubeId
 	 */
-	void diceSelected();
+	void lockCube(Integer cubeId);
 
-	void lockCube(int cube);
+	/**
+	 * 
+	 * @param cubeId
+	 */
+	void unlockCube(Integer cubeId);
 
-	void unlockCube(int cube);
+	/**
+	 * 
+	 * @return
+	 */
+	Integer set1er();
 
-	void set1er();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer set2er();
 
-	void set2er();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer set3er();
 
-	void set3er();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer set4er();
 
-	void set4er();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer set5er();
 
-	void set5er();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer set6er();
 
-	void set6er();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer setDreierPasch();
 
-	void setDreierPasch();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer setViererPasch();
 
-	void setViererPasch();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer setFullHouse();
 
-	void setFullHouse();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer setKleineStrasse();
 
-	void setKleineStrasse();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer setGrosseStrasse();
 
-	void setGrosseStrasse();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer setKniffel();
 
-	void setKniffel();
-
-	void setChance();
-
-	Integer[][] getKniffelZettel();
+	/**
+	 * 
+	 * @return
+	 */
+	Integer setChance();
 }
