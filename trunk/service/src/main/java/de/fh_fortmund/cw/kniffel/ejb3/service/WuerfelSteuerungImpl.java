@@ -2,7 +2,7 @@ package de.fh_fortmund.cw.kniffel.ejb3.service;
 
 import javax.ejb.Stateful;
 
-import de.fh_fortmund.cw.kniffel.model.Wuerfel;
+import de.fh_dortmund.cw.kniffel.model.Wuerfel;
 
 @Stateful
 public class WuerfelSteuerungImpl implements WuerfelSteuerung {

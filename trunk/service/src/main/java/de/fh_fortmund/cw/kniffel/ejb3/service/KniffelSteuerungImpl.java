@@ -6,17 +6,12 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
-import de.fh_fortmund.cw.kniffel.model.KniffelZeile;
-import de.fh_fortmund.cw.kniffel.model.KniffelZettel;
-import de.fh_fortmund.cw.kniffel.model.Spieler;
+import de.fh_dortmund.cw.kniffel.model.KniffelZeile;
+import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
+import de.fh_dortmund.cw.kniffel.model.Spieler;
 
 @Stateful
 public class KniffelSteuerungImpl implements KniffelSteuerung {
-
-	/*
-	 * private static final Log logger = LogFactory
-	 * .getLog(KniffelSteuerungImpl.class);
-	 */
 
 	@EJB
 	WuerfelSteuerung wuerfelSteuerung;
@@ -35,21 +30,25 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#diceAll()
+	 * @see
+	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#erstelleNeuesSpiel
+	 * (int)
 	 */
-	public void diceAll() {
-		wuerfelSteuerung.diceAll();
+	public KniffelZettel createNewGame(Integer spielerAnzahl) {
+		List<Spieler> spielerList = new ArrayList<Spieler>(spielerAnzahl);
+		this.spiel = new KniffelZettel(spielerList);
+		return this.spiel;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#diceSelected(
-	 * int[])
+	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#dice()
 	 */
-	public void diceSelected() {
-		wuerfelSteuerung.diceSelected();
+	public List<Integer> dice() {
+		// FIXME wuerfelSteuerung.diceAll();
+		return new ArrayList<Integer>();
+		// wuerfelSteuerung.getAllCubeValues();
 	}
 
 	/*
@@ -58,8 +57,8 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * @see
 	 * de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#lockCubes(int[])
 	 */
-	public void lockCube(int cube) {
-		wuerfelSteuerung.lockCube(cube);
+	public void lockCube(Integer cubeId) {
+		wuerfelSteuerung.lockCube(cubeId);
 	}
 
 	/*
@@ -69,25 +68,8 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#unlockCubes(int
 	 * [])
 	 */
-	public void unlockCube(int cube) {
-		wuerfelSteuerung.unlockCube(cube);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#erstelleNeuesSpiel
-	 * (int)
-	 */
-	public KniffelZettel erstelleNeuesSpiel(int spielerAnzahl) {
-		List<Spieler> spielerList = new ArrayList<Spieler>(spielerAnzahl);
-		this.spiel = new KniffelZettel(spielerList);
-		return this.spiel;
-	}
-
-	public KniffelZettel getKniffelZettel() {
-		return this.spiel;
+	public void unlockCube(Integer cubeId) {
+		wuerfelSteuerung.unlockCube(cubeId);
 	}
 
 	/**
@@ -107,14 +89,25 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		spiel.getAktuellerSpieler().getSpalte().getZelle(zeile).setWert(value);
 	}
 
+	/**
+	 * 
+	 * @param zeile
+	 * @return
+	 */
+	private Integer getValue(KniffelZeile zeile) {
+		return spiel.getAktuellerSpieler().getSpalte().getZelle(zeile)
+				.getWert();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set1er()
 	 */
-	public void set1er() {
+	public Integer set1er() {
 		setValue(KniffelZeile.ONE, wuerfelSteuerung.getCubeSum(1));
 		setNextPlayer();
+		return getValue(KniffelZeile.ONE);
 	}
 
 	/*
@@ -122,9 +115,10 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * 
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set2er()
 	 */
-	public void set2er() {
+	public Integer set2er() {
 		setValue(KniffelZeile.TWO, wuerfelSteuerung.getCubeSum(2));
 		setNextPlayer();
+		return getValue(KniffelZeile.TWO);
 	}
 
 	/*
@@ -132,9 +126,10 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * 
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set3er()
 	 */
-	public void set3er() {
+	public Integer set3er() {
 		setValue(KniffelZeile.THREE, wuerfelSteuerung.getCubeSum(3));
 		setNextPlayer();
+		return getValue(KniffelZeile.THREE);
 	}
 
 	/*
@@ -142,9 +137,10 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * 
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set4er()
 	 */
-	public void set4er() {
+	public Integer set4er() {
 		setValue(KniffelZeile.FOUR, wuerfelSteuerung.getCubeSum(4));
 		setNextPlayer();
+		return getValue(KniffelZeile.FOUR);
 	}
 
 	/*
@@ -152,9 +148,10 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * 
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set5er()
 	 */
-	public void set5er() {
+	public Integer set5er() {
 		setValue(KniffelZeile.FIVE, wuerfelSteuerung.getCubeSum(5));
 		setNextPlayer();
+		return getValue(KniffelZeile.FIVE);
 	}
 
 	/*
@@ -162,9 +159,10 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * 
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set6er()
 	 */
-	public void set6er() {
+	public Integer set6er() {
 		setValue(KniffelZeile.SIX, wuerfelSteuerung.getCubeSum(6));
 		setNextPlayer();
+		return getValue(KniffelZeile.SIX);
 	}
 
 	/*
@@ -172,7 +170,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * 
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setChance()
 	 */
-	public void setChance() {
+	public Integer setChance() {
 		int sum = 0;
 
 		// Alle Augen zählen
@@ -182,6 +180,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 
 		setValue(KniffelZeile.CHANCE, sum);
 		setNextPlayer();
+		return getValue(KniffelZeile.CHANCE);
 	}
 
 	/*
@@ -190,7 +189,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * @see
 	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setDreierPasch()
 	 */
-	public void setDreierPasch() {
+	public Integer setDreierPasch() {
 		int[] paschArr = new int[6];
 		boolean validPasch = false;
 
@@ -210,6 +209,8 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		}
 
 		setNextPlayer();
+
+		return getValue(KniffelZeile.THREE_OAK);
 	}
 
 	/*
@@ -218,7 +219,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * @see
 	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setViererPasch()
 	 */
-	public void setViererPasch() {
+	public Integer setViererPasch() {
 		int[] paschArr = new int[6];
 		boolean validPasch = false;
 
@@ -238,6 +239,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		}
 
 		setNextPlayer();
+		return getValue(KniffelZeile.FOUR_OAK);
 	}
 
 	/*
@@ -246,7 +248,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * @see
 	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setFullHouse()
 	 */
-	public void setFullHouse() {
+	public Integer setFullHouse() {
 		int[] fullHouseArr = new int[6];
 
 		// Würfelaugen zählen
@@ -270,6 +272,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		}
 
 		setNextPlayer();
+		return getValue(KniffelZeile.FULL_HOUSE);
 	}
 
 	/*
@@ -279,7 +282,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setKleineStrasse
 	 * ()
 	 */
-	public void setKleineStrasse() {
+	public Integer setKleineStrasse() {
 		int[] smallStreetArr = new int[6];
 
 		// Würfelaugen zählen
@@ -304,7 +307,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		else if (smallStreetArr[2] == 0) {
 			setValue(KniffelZeile.STREET_1, 0);
 			setNextPlayer();
-			return;
+			return 0;
 		}
 
 		boolean validStreet = true;
@@ -322,6 +325,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		}
 
 		setNextPlayer();
+		return getValue(KniffelZeile.STREET_1);
 	}
 
 	/*
@@ -331,7 +335,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setGrosseStrasse
 	 * ()
 	 */
-	public void setGrosseStrasse() {
+	public Integer setGrosseStrasse() {
 		int[] bigStreetArr = new int[6];
 
 		// Würfelaugen zählen
@@ -351,7 +355,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		else if (bigStreetArr[1] == 0) {
 			setValue(KniffelZeile.STREET_2, 0);
 			setNextPlayer();
-			return;
+			return 0;
 		}
 
 		boolean validStreet = true;
@@ -369,6 +373,8 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		}
 
 		setNextPlayer();
+
+		return getValue(KniffelZeile.STREET_2);
 	}
 
 	/*
@@ -376,7 +382,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * 
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setKniffel()
 	 */
-	public void setKniffel() {
+	public Integer setKniffel() {
 		boolean validKniffel = true;
 		int kniffelNumber = wuerfelSteuerung.getCubeValue(0);
 
@@ -394,5 +400,15 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		}
 
 		setNextPlayer();
+		return getValue(KniffelZeile.YAHTZEE);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#refresh()
+	 */
+	public KniffelZettel refresh() {
+		return this.spiel;
 	}
 }
