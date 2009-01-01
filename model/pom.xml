@@ -23,10 +23,5 @@
 		</resources>
 	</build>
 	<dependencies>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>1.5.3</version>
-		</dependency>
 	</dependencies>
 </project>

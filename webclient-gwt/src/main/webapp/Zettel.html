@@ -1,0 +1,451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+
+<style type="text/css">
+.kniffelZettel {
+	border: #000 2px solid;
+}
+
+.rowPlayerName {
+	border-bottom: #000 2px solid;
+	padding: 2px 10px 2px 10px;
+	margin: 0px;
+	min-width: 60px;
+	font-weight: bold;
+}
+
+.colLabel {
+	border-right: #000 2px solid;
+	padding: 2px 10px 2px 10px;
+	margin: 0px;
+	min-width: 60px;
+	font-weight: bold;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="kniffelZettel">
+	<colgroup>
+		<col class="colPlayerName" />
+	</colgroup>
+	<tbody>
+		<tr class="rowPlayerName">
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label">1. Spieler</div>
+			</td>
+			<td>
+			<div class="gwt-Label">2. Spieler</div>
+			</td>
+			<td>
+			<div class="gwt-Label">3. Spieler</div>
+			</td>
+			<td>
+			<div class="gwt-Label">4. Spieler</div>
+			</td>
+			<td>
+			<div class="gwt-Label">5. Spieler</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">1 er</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">2 er</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">3 er</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">4 er</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">5 er</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">6 er</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Summe (oben)</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Bonus</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Gesamtsumme (oben)</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Dreierpasch</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Viererpasch</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Full House</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Kleine Straße</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Große Straße</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Kniffel</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Chance</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Summe (unten)</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Summe (oben)</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div class="gwt-Label">Gesamtsumme</div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+			<td>
+			<div class="gwt-Label"></div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

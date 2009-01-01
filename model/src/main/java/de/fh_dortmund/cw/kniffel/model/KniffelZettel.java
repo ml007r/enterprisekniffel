@@ -12,7 +12,7 @@ import java.util.Map;
  * 
  */
 public class KniffelZettel implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -22,7 +22,7 @@ public class KniffelZettel implements Serializable {
 
 	private Map<Spieler, KniffelSpalte> spielerMap;
 
-	private List<Spieler> spieler;
+	private List<Spieler> spielerListe;
 
 	private Spieler aktuellerSpieler;
 
@@ -42,8 +42,10 @@ public class KniffelZettel implements Serializable {
 	 * @param spielerAnzahl
 	 */
 	public KniffelZettel(List<Spieler> spielerList) {
+		this();
 		this.aktuellerSpieler = spielerList.get(0);
-		this.spieler = spielerList;
+		this.spielerListe = spielerList;
+
 		for (Spieler s : spielerList) {
 			spielerMap.put(s, new KniffelSpalte(s));
 		}
@@ -54,7 +56,7 @@ public class KniffelZettel implements Serializable {
 	}
 
 	public List<Spieler> getSpieler() {
-		return spieler;
+		return spielerListe;
 	}
 
 	public Spieler getAktuellerSpieler() {
