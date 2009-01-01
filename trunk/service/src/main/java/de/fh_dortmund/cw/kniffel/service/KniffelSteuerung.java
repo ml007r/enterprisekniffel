@@ -1,16 +1,21 @@
-package de.fh_fortmund.cw.kniffel.ejb3.service;
+package de.fh_dortmund.cw.kniffel.service;
 
 import java.util.List;
 
+import javax.ejb.Local;
 import javax.ejb.Remote;
 
+import de.fh_dortmund.cw.kniffel.exceptions.WuerfelException;
+import de.fh_dortmund.cw.kniffel.model.KniffelZeile;
 import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
+import de.fh_dortmund.cw.kniffel.model.Wuerfel;
 
 /**
  * 
  * @author tbs
  * 
  */
+@Local
 @Remote
 public interface KniffelSteuerung {
 
@@ -19,7 +24,7 @@ public interface KniffelSteuerung {
 	 * @param spielerAnzahl
 	 * @return
 	 */
-	KniffelZettel createNewGame(Integer playerCount);
+	void createNewGame(Integer playerCount);
 
 	/**
 	 * 
@@ -30,8 +35,15 @@ public interface KniffelSteuerung {
 	/**
 	 * 
 	 * @return
+	 * @throws WuerfelException 
 	 */
-	List<Integer> dice();
+	List<Wuerfel> dice() throws WuerfelException;
+
+	/**
+	 * 
+	 * @return
+	 */
+	List<Wuerfel> initDices();
 
 	/**
 	 * 
@@ -122,4 +134,19 @@ public interface KniffelSteuerung {
 	 * @return
 	 */
 	Integer setChance();
+
+	/**
+	 * 
+	 * @param cell
+	 * @param playerId
+	 * @return
+	 */
+	Integer getValue(KniffelZeile cell, Integer playerId);
+
+	/**
+	 * 
+	 * @return
+	 */
+	Integer getAktuellerSpieler();
+
 }
