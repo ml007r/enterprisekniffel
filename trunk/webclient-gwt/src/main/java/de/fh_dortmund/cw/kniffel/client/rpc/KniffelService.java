@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 
-import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
+import de.fh_dortmund.cw.kniffel.exceptions.WuerfelException;
+import de.fh_dortmund.cw.kniffel.model.KniffelZeile;
 import de.fh_dortmund.cw.kniffel.model.Wuerfel;
 
 /**
@@ -19,13 +20,20 @@ public interface KniffelService extends RemoteService {
 	 * @param playerCount
 	 * @return
 	 */
-	KniffelZettel createNewGame(Integer playerCount);
+	void createNewGame(Integer playerCount);
+
+	/**
+	 * 
+	 * @return
+	 * @throws WuerfelException
+	 */
+	List<Wuerfel> dice() throws WuerfelException;
 
 	/**
 	 * 
 	 * @return
 	 */
-	List<Wuerfel> dice();
+	List<Wuerfel> initDices();
 
 	/**
 	 * 
@@ -41,79 +49,22 @@ public interface KniffelService extends RemoteService {
 
 	/**
 	 * 
+	 * @param cell
 	 * @return
 	 */
-	Integer set1er();
+	Integer setValue(KniffelZeile cell);
+
+	/**
+	 * 
+	 * @param cell
+	 * @param playerId
+	 * @return
+	 */
+	Integer getValue(KniffelZeile cell, Integer playerId);
 
 	/**
 	 * 
 	 * @return
 	 */
-	Integer set2er();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer set3er();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer set4er();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer set5er();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer set6er();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setDreierPasch();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setViererPasch();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setFullHouse();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setKleineStrasse();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setGrosseStrasse();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setKniffel();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setChance();
+	Integer getAktellerSpieler();
 }

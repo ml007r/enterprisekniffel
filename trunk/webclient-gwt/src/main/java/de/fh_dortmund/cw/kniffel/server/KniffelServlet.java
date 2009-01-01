@@ -7,9 +7,11 @@ import javax.ejb.EJB;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.fh_dortmund.cw.kniffel.client.rpc.KniffelService;
+import de.fh_dortmund.cw.kniffel.exceptions.WuerfelException;
+import de.fh_dortmund.cw.kniffel.model.KniffelZeile;
 import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
 import de.fh_dortmund.cw.kniffel.model.Wuerfel;
-import de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung;
+import de.fh_dortmund.cw.kniffel.service.KniffelSteuerung;
 
 /**
  * 
@@ -27,7 +29,6 @@ public class KniffelServlet extends RemoteServiceServlet implements
 	 * 
 	 */
 	public KniffelServlet() {
-
 	}
 
 	/*
@@ -37,8 +38,8 @@ public class KniffelServlet extends RemoteServiceServlet implements
 	 * de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#createNewGame(java
 	 * .lang.Integer)
 	 */
-	public KniffelZettel createNewGame(Integer playerCount) {
-		return kniffelSteuerung.createNewGame(playerCount);
+	public void createNewGame(Integer playerCount) {
+		kniffelSteuerung.createNewGame(playerCount);
 	}
 
 	/*
@@ -55,8 +56,8 @@ public class KniffelServlet extends RemoteServiceServlet implements
 	 * 
 	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#dice()
 	 */
-	public List<Wuerfel> dice() {
-		return null; // kniffelSteuerung.dice();
+	public List<Wuerfel> dice() throws WuerfelException {
+		return kniffelSteuerung.dice();
 	}
 
 	/*
@@ -84,120 +85,68 @@ public class KniffelServlet extends RemoteServiceServlet implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set1er()
+	 * @see
+	 * de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setValue(de.fh_dortmund
+	 * .cw.kniffel.model.KniffelZeile)
 	 */
-	public Integer set1er() {
-		return kniffelSteuerung.set1er();
+	public Integer setValue(KniffelZeile cell) {
+		if (cell == null) {
+			throw new IllegalArgumentException();
+		}
+
+		switch (cell.ordinal()) {
+		case 1:
+			return kniffelSteuerung.set1er();
+		case 2:
+			return kniffelSteuerung.set2er();
+		case 3:
+			return kniffelSteuerung.set3er();
+		case 4:
+			return kniffelSteuerung.set4er();
+		case 5:
+			return kniffelSteuerung.set5er();
+		case 6:
+			return kniffelSteuerung.set6er();
+		case 7:
+			return kniffelSteuerung.setDreierPasch();
+		case 8:
+			return kniffelSteuerung.setViererPasch();
+		case 9:
+			return kniffelSteuerung.setFullHouse();
+		case 10:
+			return kniffelSteuerung.setKleineStrasse();
+		case 11:
+			return kniffelSteuerung.setGrosseStrasse();
+		case 12:
+			return kniffelSteuerung.setChance();
+		default:
+			break;
+		}
+
+		return null;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set2er()
+	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#initDices()
 	 */
-	public Integer set2er() {
-		return kniffelSteuerung.set2er();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set3er()
-	 */
-	public Integer set3er() {
-		return kniffelSteuerung.set3er();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set4er()
-	 */
-	public Integer set4er() {
-		return kniffelSteuerung.set4er();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set5er()
-	 */
-	public Integer set5er() {
-		return kniffelSteuerung.set5er();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#set6er()
-	 */
-	public Integer set6er() {
-		return kniffelSteuerung.set6er();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setDreierPasch()
-	 */
-	public Integer setDreierPasch() {
-		return kniffelSteuerung.setDreierPasch();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setViererPasch()
-	 */
-	public Integer setViererPasch() {
-		return kniffelSteuerung.setViererPasch();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setFullHouse()
-	 */
-	public Integer setFullHouse() {
-		return kniffelSteuerung.setFullHouse();
+	public List<Wuerfel> initDices() {
+		return kniffelSteuerung.initDices();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setKleineStrasse()
+	 * de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#getValue(de.fh_dortmund
+	 * .cw.kniffel.model.KniffelZeile, java.lang.Integer)
 	 */
-	public Integer setKleineStrasse() {
-		return kniffelSteuerung.setKleineStrasse();
+	public Integer getValue(KniffelZeile cell, Integer playerId) {
+		return kniffelSteuerung.getValue(cell, playerId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setGrosseStrasse()
-	 */
-	public Integer setGrosseStrasse() {
-		return kniffelSteuerung.setGrosseStrasse();
+	public Integer getAktellerSpieler() {
+		return kniffelSteuerung.getAktuellerSpieler();
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setKniffel()
-	 */
-	public Integer setKniffel() {
-		return kniffelSteuerung.setKniffel();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#setChance()
-	 */
-	public Integer setChance() {
-		return kniffelSteuerung.setChance();
-	}
-
 }

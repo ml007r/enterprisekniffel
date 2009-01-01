@@ -14,24 +14,16 @@ public class Spieler implements Serializable {
 	 */
 	private static final long serialVersionUID = -3690412025188387040L;
 
-	private String name;
+	private Integer id;
 
 	private KniffelSpalte spalte;
 
 	public Spieler() {
 	}
 
-	public Spieler(String name) {
+	public Spieler(Integer id) {
 		super();
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		this.id = id;
 	}
 
 	public KniffelSpalte getSpalte() {
@@ -40,5 +32,18 @@ public class Spieler implements Serializable {
 
 	public void setSpalte(KniffelSpalte spalte) {
 		this.spalte = spalte;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "<Spieler #" + id + ">";
 	}
 }

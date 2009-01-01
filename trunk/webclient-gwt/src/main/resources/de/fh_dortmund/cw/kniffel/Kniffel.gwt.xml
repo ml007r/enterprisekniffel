@@ -18,6 +18,7 @@
 
 	<source path="client" />
 	<source path="model" />
+	<source path="exceptions" />
 
 
 	<!-- Specify the application specific style sheet.              -->
