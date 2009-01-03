@@ -8,6 +8,7 @@ import javax.ejb.Remote;
 import de.fh_dortmund.cw.kniffel.exceptions.WuerfelException;
 import de.fh_dortmund.cw.kniffel.model.KniffelZeile;
 import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
+import de.fh_dortmund.cw.kniffel.model.Spieler;
 import de.fh_dortmund.cw.kniffel.model.Wuerfel;
 
 /**
@@ -147,6 +148,6 @@ public interface KniffelSteuerung {
 	 * 
 	 * @return
 	 */
-	Integer getAktuellerSpieler();
+	Spieler getAktuellerSpieler();
 
 }

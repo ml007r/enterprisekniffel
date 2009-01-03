@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 import de.fh_dortmund.cw.kniffel.exceptions.WuerfelException;
 import de.fh_dortmund.cw.kniffel.model.KniffelZeile;
+import de.fh_dortmund.cw.kniffel.model.Spieler;
 import de.fh_dortmund.cw.kniffel.model.Wuerfel;
 
 /**
@@ -66,5 +67,5 @@ public interface KniffelService extends RemoteService {
 	 * 
 	 * @return
 	 */
-	Integer getAktellerSpieler();
+	Spieler getAktellerSpieler();
 }

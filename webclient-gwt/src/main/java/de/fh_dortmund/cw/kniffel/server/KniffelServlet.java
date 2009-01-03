@@ -10,6 +10,7 @@ import de.fh_dortmund.cw.kniffel.client.rpc.KniffelService;
 import de.fh_dortmund.cw.kniffel.exceptions.WuerfelException;
 import de.fh_dortmund.cw.kniffel.model.KniffelZeile;
 import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
+import de.fh_dortmund.cw.kniffel.model.Spieler;
 import de.fh_dortmund.cw.kniffel.model.Wuerfel;
 import de.fh_dortmund.cw.kniffel.service.KniffelSteuerung;
 
@@ -92,38 +93,35 @@ public class KniffelServlet extends RemoteServiceServlet implements
 	public Integer setValue(KniffelZeile cell) {
 		if (cell == null) {
 			throw new IllegalArgumentException();
-		}
-
-		switch (cell.ordinal()) {
-		case 1:
+		} else if (cell == KniffelZeile.ONE) {
 			return kniffelSteuerung.set1er();
-		case 2:
+		} else if (cell == KniffelZeile.TWO) {
 			return kniffelSteuerung.set2er();
-		case 3:
+		} else if (cell == KniffelZeile.THREE) {
 			return kniffelSteuerung.set3er();
-		case 4:
+		} else if (cell == KniffelZeile.FOUR) {
 			return kniffelSteuerung.set4er();
-		case 5:
+		} else if (cell == KniffelZeile.FIVE) {
 			return kniffelSteuerung.set5er();
-		case 6:
+		} else if (cell == KniffelZeile.SIX) {
 			return kniffelSteuerung.set6er();
-		case 7:
+		} else if (cell == KniffelZeile.THREE_OAK) {
 			return kniffelSteuerung.setDreierPasch();
-		case 8:
+		} else if (cell == KniffelZeile.FOUR_OAK) {
 			return kniffelSteuerung.setViererPasch();
-		case 9:
+		} else if (cell == KniffelZeile.FULL_HOUSE) {
 			return kniffelSteuerung.setFullHouse();
-		case 10:
+		} else if (cell == KniffelZeile.STREET_1) {
 			return kniffelSteuerung.setKleineStrasse();
-		case 11:
+		} else if (cell == KniffelZeile.STREET_2) {
 			return kniffelSteuerung.setGrosseStrasse();
-		case 12:
+		} else if (cell == KniffelZeile.YAHTZEE) {
+			return kniffelSteuerung.setKniffel();
+		} else if (cell == KniffelZeile.CHANCE) {
 			return kniffelSteuerung.setChance();
-		default:
-			break;
+		} else {
+			throw new IllegalArgumentException();
 		}
-
-		return null;
 	}
 
 	/*
@@ -146,7 +144,7 @@ public class KniffelServlet extends RemoteServiceServlet implements
 		return kniffelSteuerung.getValue(cell, playerId);
 	}
 
-	public Integer getAktellerSpieler() {
+	public Spieler getAktellerSpieler() {
 		return kniffelSteuerung.getAktuellerSpieler();
 	}
 }

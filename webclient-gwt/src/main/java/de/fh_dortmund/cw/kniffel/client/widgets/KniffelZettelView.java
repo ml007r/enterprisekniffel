@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.TableListener;
 
 import de.fh_dortmund.cw.kniffel.client.Kniffel;
 import de.fh_dortmund.cw.kniffel.model.KniffelZeile;
+import de.fh_dortmund.cw.kniffel.model.Spieler;
 
 /**
  * 
@@ -17,10 +18,11 @@ import de.fh_dortmund.cw.kniffel.model.KniffelZeile;
  */
 public class KniffelZettelView {
 
+	// Muss mit KniffelZeile übereinstimmen + 1 Zeile nbsp
 	private final String[] rowTitleLabel = { "&nbsp;", "1 er", "2 er", "3 er",
 			"4 er", "5 er", "6 er", "Summe (oben)", "Bonus",
-			"Gesamtsumme (oben)", "&nbsp;", "Dreierpasch", "Viererpasch",
-			"Full House", "Kleine Straße", "Große Straße", "Kniffel", "Chance",
+			"Gesamtsumme (oben)", "Dreierpasch", "Viererpasch", "Full House",
+			"Kleine Straße", "Große Straße", "Kniffel", "Chance",
 			"Gesamtsumme (oben)", "Gesamtsumme" };
 
 	// Widget
@@ -69,15 +71,17 @@ public class KniffelZettelView {
 	/**
 	 * 
 	 */
-	protected void setSpielerId() {
+	protected void setSpieler() {
 		Kniffel.getKniffelService().getAktellerSpieler(
-				new AsyncCallback<Integer>() {
+				new AsyncCallback<Spieler>() {
 					public void onFailure(Throwable arg0) {
 						aktuellerSpielerId = 1;
 					}
 
-					public void onSuccess(Integer arg0) {
-						aktuellerSpielerId = arg0;
+					public void onSuccess(Spieler arg0) {
+						aktuellerSpielerId = arg0.getId();
+						HTML cell = (HTML) widget.getWidget(0, 0);
+						cell.setText("Spieler #" + arg0.getId());
 					}
 				});
 	}
@@ -149,16 +153,18 @@ public class KniffelZettelView {
 			Kniffel.getKniffelService().setValue(findKniffelZeile(row),
 					new AsyncCallback<Integer>() {
 						public void onFailure(Throwable arg0) {
-							Window
-									.alert("Die Zelle kann nicht ausgewählt werden!");
+							Window.alert(arg0.getMessage());
 						}
 
 						public void onSuccess(Integer arg0) {
 							cell.setHTML("" + arg0);
 
-							wuerfelView.reinitCubes();
+							/*
+							 * wuerfelView.reinitCubes();
+							 * 
+							 * setSpielerId();
+							 */
 
-							setSpielerId();
 							// TODO Summenfüllung
 						}
 					});
@@ -173,18 +179,36 @@ public class KniffelZettelView {
 	 * @return
 	 */
 	protected KniffelZeile findKniffelZeile(int row) {
-
-		// 1...6
-		if (row > 0 && row < 7) {
-			return KniffelZeile.values()[row - 1];
+		switch (row) {
+		case 1:
+			return KniffelZeile.ONE;
+		case 2:
+			return KniffelZeile.TWO;
+		case 3:
+			return KniffelZeile.THREE;
+		case 4:
+			return KniffelZeile.FOUR;
+		case 5:
+			return KniffelZeile.FIVE;
+		case 6:
+			return KniffelZeile.SIX;
+		case 10:
+			return KniffelZeile.THREE_OAK;
+		case 11:
+			return KniffelZeile.FOUR_OAK;
+		case 12:
+			return KniffelZeile.FULL_HOUSE;
+		case 13:
+			return KniffelZeile.STREET_1;
+		case 14:
+			return KniffelZeile.STREET_2;
+		case 15:
+			return KniffelZeile.YAHTZEE;
+		case 16:
+			return KniffelZeile.CHANCE;
+		default:
+			return null;
 		}
-
-		// Pasch...Chance
-		if (row > 10 && row < 18) {
-			return KniffelZeile.values()[row - 1];
-		}
-
-		return null;
 	}
 
 	/**
