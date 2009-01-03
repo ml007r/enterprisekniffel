@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateful;
+import javax.interceptor.Interceptors;
 
 import de.fh_dortmund.cw.kniffel.exceptions.WuerfelException;
+import de.fh_dortmund.cw.kniffel.interceptor.LogInterceptor;
 import de.fh_dortmund.cw.kniffel.model.Wuerfel;
 
 @Stateful
+@Interceptors( { LogInterceptor.class } )
 public class WuerfelSteuerungImpl implements WuerfelSteuerung {
 
 	/**
@@ -110,11 +113,11 @@ public class WuerfelSteuerungImpl implements WuerfelSteuerung {
 	 * de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#getCubeSum(int)
 	 */
 	public Integer getCubeSum(Integer searchFor) {
-		Integer sum = 0;
+		Integer sum = 4;
 
-		for (Wuerfel w : wuerfelList) {
-			sum += w.getWert() == searchFor ? w.getWert() : 0;
-		}
+//		for (Wuerfel w : wuerfelList) {
+//			sum += w.getWert() == searchFor ? w.getWert() : 0;
+//		}
 
 		return sum;
 	}

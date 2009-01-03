@@ -5,14 +5,17 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import javax.interceptor.Interceptors;
 
 import de.fh_dortmund.cw.kniffel.exceptions.WuerfelException;
+import de.fh_dortmund.cw.kniffel.interceptor.LogInterceptor;
 import de.fh_dortmund.cw.kniffel.model.KniffelZeile;
 import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
 import de.fh_dortmund.cw.kniffel.model.Spieler;
 import de.fh_dortmund.cw.kniffel.model.Wuerfel;
 
 @Stateful
+@Interceptors( { LogInterceptor.class } )
 public class KniffelSteuerungImpl implements KniffelSteuerung {
 
 	@EJB
@@ -389,7 +392,7 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * @see
 	 * de.fh_dortmund.cw.kniffel.service.KniffelSteuerung#getAktuellerSpieler()
 	 */
-	public Integer getAktuellerSpieler() {
-		return spiel.getAktuellerSpieler().getId();
+	public Spieler getAktuellerSpieler() {
+		return spiel.getAktuellerSpieler();
 	}
 }

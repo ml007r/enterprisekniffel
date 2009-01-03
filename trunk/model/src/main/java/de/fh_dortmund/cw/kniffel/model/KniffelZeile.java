@@ -19,6 +19,6 @@ public enum KniffelZeile implements Serializable  {
 	THREE_OAK, FOUR_OAK, FULL_HOUSE, STREET_1, STREET_2, YAHTZEE, CHANCE,
 
 	// Untere Hälfte: Summe + GesamtSumme
-	SUM_BOTTOM, SUM_TOTAL
+	SUM_BOTTOM_TOTAL, SUM_TOTAL
 	
 }
