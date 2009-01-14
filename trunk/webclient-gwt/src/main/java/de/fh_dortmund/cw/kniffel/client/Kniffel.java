@@ -75,6 +75,10 @@ public class Kniffel implements EntryPoint {
 		kniffelZettelView = new KniffelZettelView(spielerAnzahl);
 		body.add(kniffelZettelView.getWidget());
 
+		
+		
+		
+		
 		wuerfelView = new WuerfelView(kniffelZettelView);
 		body.add(wuerfelView.getWidget());
 	}
