@@ -58,4 +58,9 @@ public class KniffelZelle implements Serializable {
 	public void setZeile(KniffelZeile zeile) {
 		this.zeile = zeile;
 	}
+	
+	@Override
+	public String toString() {
+		return "<KniffelZelle: " + wert + "; " + spalte + "; " + zeile + ">";
+	}
 }

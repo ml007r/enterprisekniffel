@@ -14,8 +14,13 @@ import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
 import de.fh_dortmund.cw.kniffel.model.Spieler;
 import de.fh_dortmund.cw.kniffel.model.Wuerfel;
 
+/**
+ * 
+ * @author tbs
+ * 
+ */
 @Stateful
-@Interceptors( { LogInterceptor.class } )
+@Interceptors( { LogInterceptor.class })
 public class KniffelSteuerungImpl implements KniffelSteuerung {
 
 	@EJB
@@ -65,7 +70,6 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 */
 	public List<Wuerfel> initDices() {
 		return wuerfelSteuerung.resetTrys();
-
 	}
 
 	/*
@@ -89,276 +93,52 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		wuerfelSteuerung.unlockCube(cubeId);
 	}
 
-	/**
-	 * Setzt den aktuellen Spieler auf den nächsten Spieler
-	 */
-	private void setNextPlayer() {
-		spiel.setAktuellerSpieler(spiel.getSpieler().get(
-				spiel.getSpieler().indexOf(spiel.getAktuellerSpieler()) + 1
-						% spiel.getSpieler().size()));
-	}
-
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param value
+	 * @see
+	 * de.fh_dortmund.cw.kniffel.service.KniffelSteuerung#setValue(de.fh_dortmund
+	 * .cw.kniffel.model.KniffelZeile)
 	 */
-	private Integer setValue(KniffelZeile zeile, Integer value) {
-		spiel.getAktuellerSpieler().getSpalte().getZelle(zeile).setWert(value);
+	public Integer setValue(KniffelZeile row) {
+		Integer result = 0;
+
+		if (row == null) {
+			throw new IllegalArgumentException();
+		} else if (row == KniffelZeile.ONE) {
+			result = wuerfelSteuerung.getCubeSum(1);
+		} else if (row == KniffelZeile.TWO) {
+			result = wuerfelSteuerung.getCubeSum(2);
+		} else if (row == KniffelZeile.THREE) {
+			result = wuerfelSteuerung.getCubeSum(3);
+		} else if (row == KniffelZeile.FOUR) {
+			result = wuerfelSteuerung.getCubeSum(4);
+		} else if (row == KniffelZeile.FIVE) {
+			result = wuerfelSteuerung.getCubeSum(5);
+		} else if (row == KniffelZeile.SIX) {
+			result = wuerfelSteuerung.getCubeSum(6);
+		} else if (row == KniffelZeile.THREE_OAK) {
+			result = calculateThreeOfAKind();
+		} else if (row == KniffelZeile.FOUR_OAK) {
+			result = calculateFourOfAKind();
+		} else if (row == KniffelZeile.FULL_HOUSE) {
+			result = calculateFullHouse();
+		} else if (row == KniffelZeile.STREET_1) {
+			result = calculateStreet1();
+		} else if (row == KniffelZeile.STREET_2) {
+			result = calculateStreet2();
+		} else if (row == KniffelZeile.YAHTZEE) {
+			result = calculateKniffel();
+		} else if (row == KniffelZeile.CHANCE) {
+			result = calculateChance();
+		} else {
+			throw new IllegalArgumentException();
+		}
+
+		setValue(row, result);
+		generateSums();
 		setNextPlayer();
-		return value;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set1er()
-	 */
-	public Integer set1er() {
-		return setValue(KniffelZeile.ONE, wuerfelSteuerung.getCubeSum(1));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set2er()
-	 */
-	public Integer set2er() {
-		return setValue(KniffelZeile.TWO, wuerfelSteuerung.getCubeSum(2));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set3er()
-	 */
-	public Integer set3er() {
-		return setValue(KniffelZeile.THREE, wuerfelSteuerung.getCubeSum(3));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set4er()
-	 */
-	public Integer set4er() {
-		return setValue(KniffelZeile.FOUR, wuerfelSteuerung.getCubeSum(4));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set5er()
-	 */
-	public Integer set5er() {
-		return setValue(KniffelZeile.FIVE, wuerfelSteuerung.getCubeSum(5));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#set6er()
-	 */
-	public Integer set6er() {
-		return setValue(KniffelZeile.SIX, wuerfelSteuerung.getCubeSum(6));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setChance()
-	 */
-	public Integer setChance() {
-		int sum = 0;
-
-		// Alle Augen zählen
-		for (int i : wuerfelSteuerung.getAllCubeValues()) {
-			sum += i;
-		}
-
-		return setValue(KniffelZeile.CHANCE, sum);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setDreierPasch()
-	 */
-	public Integer setDreierPasch() {
-		int[] paschArr = new int[6];
-
-		for (int j : wuerfelSteuerung.getAllCubeValues()) {
-			paschArr[j - 1]++;
-
-			// Wenn eine Zahl 3x vorkam, kann die Summe geschrieben werden
-			if (paschArr[j - 1] == 3) {
-				return setValue(KniffelZeile.THREE_OAK, j * 3);
-			}
-		}
-
-		return setValue(KniffelZeile.THREE_OAK, 0);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setViererPasch()
-	 */
-	public Integer setViererPasch() {
-		int[] paschArr = new int[6];
-
-		for (int j : wuerfelSteuerung.getAllCubeValues()) {
-			paschArr[j - 1]++;
-
-			// Wenn eine Zahl 3x vorkam, kann die Summe geschrieben werden
-			if (paschArr[j - 1] == 4) {
-				return setValue(KniffelZeile.FOUR_OAK, j * 4);
-			}
-		}
-
-		return setValue(KniffelZeile.FOUR_OAK, 0);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setFullHouse()
-	 */
-	public Integer setFullHouse() {
-		int[] fullHouseArr = new int[6];
-
-		// Würfelaugen zählen
-		for (int j : wuerfelSteuerung.getAllCubeValues()) {
-			fullHouseArr[j - 1]++;
-		}
-
-		boolean valid2er = false;
-		boolean valid3er = false;
-
-		// TODO Prüfen...
-		for (int i : fullHouseArr) {
-			if (fullHouseArr[i] == 2) {
-				valid2er = true;
-			} else if (fullHouseArr[i] == 3) {
-				valid3er = true;
-			}
-		}
-
-		if (valid2er && valid3er) {
-			return setValue(KniffelZeile.FULL_HOUSE, 25);
-		}
-
-		return setValue(KniffelZeile.FULL_HOUSE, 0);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setKleineStrasse
-	 * ()
-	 */
-	public Integer setKleineStrasse() {
-		int[] smallStreetArr = new int[6];
-
-		// Würfelaugen zählen
-		for (int j : wuerfelSteuerung.getAllCubeValues()) {
-			smallStreetArr[j - 1]++;
-		}
-
-		int startAt = 0;
-
-		// Es wurde keine 1 gewürftelt, Straße beginnt mindestens mit 2
-		if (smallStreetArr[0] == 0) {
-			startAt = 1;
-		}
-
-		// Es wurde auch keine 2 gewürfelt, Straße beginnt mindestens mit 3
-		else if (smallStreetArr[1] == 0) {
-			startAt = 2;
-		}
-
-		// Straße beginnt nicht mit 1, 2 oder 3 => Kein gültige Straße => 0
-		// Punkte
-		else if (smallStreetArr[2] == 0) {
-			return setValue(KniffelZeile.STREET_1, 0);
-		}
-
-		boolean validStreet = true;
-
-		for (int i = startAt; i < startAt + 4; i++) {
-			if (smallStreetArr[i] == 0) {
-				validStreet = false;
-			}
-		}
-
-		if (validStreet) {
-			return setValue(KniffelZeile.STREET_1, 30);
-		}
-
-		return setValue(KniffelZeile.STREET_1, 0);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setGrosseStrasse
-	 * ()
-	 */
-	public Integer setGrosseStrasse() {
-		int[] bigStreetArr = new int[6];
-
-		// Würfelaugen zählen
-		for (int j : wuerfelSteuerung.getAllCubeValues()) {
-			bigStreetArr[j - 1]++;
-		}
-
-		int startAt = 0;
-
-		// Es wurde keine 1 gewürftelt, Straße beginnt mindestens mit 2
-		if (bigStreetArr[0] == 0) {
-			startAt = 1;
-		}
-
-		// Straße beginnt nicht mit 1 oder 2 => Kein gültige Straße => 0
-		// Punkte
-		else if (bigStreetArr[1] == 0) {
-			return setValue(KniffelZeile.STREET_2, 0);
-		}
-
-		boolean validStreet = true;
-
-		for (int i = startAt; i < startAt + 5; i++) {
-			if (bigStreetArr[i] == 0) {
-				validStreet = false;
-			}
-		}
-
-		if (validStreet) {
-			return setValue(KniffelZeile.STREET_2, 40);
-		}
-
-		return setValue(KniffelZeile.STREET_2, 0);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.KniffelSteuerung#setKniffel()
-	 */
-	public Integer setKniffel() {
-		int kniffelNumber = wuerfelSteuerung.getCubeValue(1);
-
-		for (int i : wuerfelSteuerung.getAllCubeValues()) {
-			if (i != kniffelNumber) {
-				return setValue(KniffelZeile.YAHTZEE, 0);
-			}
-		}
-
-		return setValue(KniffelZeile.YAHTZEE, 50);
+		return result;
 	}
 
 	/*
@@ -377,13 +157,14 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * de.fh_dortmund.cw.kniffel.service.KniffelSteuerung#getValue(de.fh_dortmund
 	 * .cw.kniffel.model.KniffelZeile, java.lang.Integer)
 	 */
-	public Integer getValue(KniffelZeile cell, Integer playerId) {
+	public Integer getValue(KniffelZeile cell, Integer playerId)
+			throws Exception {
 		for (Spieler s : spiel.getSpieler()) {
 			if (s.getId() == playerId) {
-				s.getSpalte().getZelle(cell).getWert();
+				return s.getSpalte().getZelle(cell).getWert();
 			}
 		}
-		return null;
+		throw new Exception();
 	}
 
 	/*
@@ -395,4 +176,331 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	public Spieler getAktuellerSpieler() {
 		return spiel.getAktuellerSpieler();
 	}
+
+	// ********************************************************************************************
+	// PRIVATE
+
+	/**
+	 * Setzt den aktuellen Spieler auf den nächsten Spieler
+	 */
+	private void setNextPlayer() {
+		int curPlayerPos = spiel.getSpieler().indexOf(
+				spiel.getAktuellerSpieler());
+		int nextPlayerPos = ++curPlayerPos % spiel.getSpieler().size();
+
+		spiel.setAktuellerSpieler(spiel.getSpieler().get(nextPlayerPos));
+	}
+
+	/**
+	 * 
+	 * @param value
+	 */
+	private void setValue(KniffelZeile zeile, Integer value) {
+		spiel.getAktuellerSpieler().getSpalte().getZelle(zeile).setWert(value);
+	}
+
+	/**
+	 * Summenbildung
+	 * 
+	 * @throws Exception
+	 */
+	private void generateSums() {
+		Integer playerId = getAktuellerSpieler().getId();
+		try {
+			setValue(KniffelZeile.SUM_TOP, getSumTop(playerId));
+		} catch (Exception e) {
+			// nix
+		}
+
+		try {
+			setValue(KniffelZeile.BONUS_TOP, getBonusTop(playerId));
+		} catch (Exception e) {
+			// nix
+		}
+
+		try {
+			setValue(KniffelZeile.SUM_TOP_TOTAL, getSumTopTotal(playerId));
+		} catch (Exception e) {
+			// nix
+		}
+
+		try {
+			setValue(KniffelZeile.SUM_BOTTOM_TOTAL, getSumBottom(playerId));
+		} catch (Exception e) {
+			// nix
+		}
+
+		try {
+			setValue(KniffelZeile.SUM_TOTAL, getSumTotal(playerId));
+		} catch (Exception e) {
+			// nix
+		}
+	}
+
+	/**
+	 * 
+	 * @param playerId
+	 * @return
+	 * @throws Exception
+	 */
+	private Integer getSumTop(Integer playerId) throws Exception {
+		return getValue(KniffelZeile.ONE, playerId)
+				+ getValue(KniffelZeile.TWO, playerId)
+				+ getValue(KniffelZeile.THREE, playerId)
+				+ getValue(KniffelZeile.FOUR, playerId)
+				+ getValue(KniffelZeile.FIVE, playerId)
+				+ getValue(KniffelZeile.SIX, playerId);
+	}
+
+	/**
+	 * 
+	 * @param playerId
+	 * @return
+	 * @throws Exception
+	 */
+	private Integer getBonusTop(Integer playerId) throws Exception {
+		return getValue(KniffelZeile.SUM_TOP, playerId) > 63 ? 35 : 0;
+	}
+
+	/**
+	 * 
+	 * @param playerId
+	 * @return
+	 * @throws Exception
+	 */
+	private Integer getSumTopTotal(Integer playerId) throws Exception {
+		return getValue(KniffelZeile.SUM_TOP, playerId)
+				+ getValue(KniffelZeile.BONUS_TOP, playerId);
+	}
+
+	/**
+	 * 
+	 * @param playerId
+	 * @return
+	 * @throws Exception
+	 */
+	private Integer getSumBottom(Integer playerId) throws Exception {
+		return getValue(KniffelZeile.THREE_OAK, playerId)
+				+ getValue(KniffelZeile.FOUR_OAK, playerId)
+				+ getValue(KniffelZeile.FULL_HOUSE, playerId)
+				+ getValue(KniffelZeile.STREET_1, playerId)
+				+ getValue(KniffelZeile.STREET_2, playerId)
+				+ getValue(KniffelZeile.YAHTZEE, playerId)
+				+ getValue(KniffelZeile.CHANCE, playerId);
+	}
+
+	/**
+	 * 
+	 * @param playerId
+	 * @return
+	 * @throws Exception
+	 */
+	private Integer getSumTotal(Integer playerId) throws Exception {
+		return getValue(KniffelZeile.SUM_TOP_TOTAL, playerId)
+				+ getValue(KniffelZeile.SUM_BOTTOM_TOTAL, playerId);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private Integer calculateThreeOfAKind() {
+
+		boolean validTOAK = false;
+
+		int[] paschArr = new int[6];
+		Integer sum = 0;
+
+		for (int j : wuerfelSteuerung.getAllCubeValues()) {
+			paschArr[j - 1]++;
+			sum += j;
+
+			// Wenn eine Zahl 3x vorkam, ist der Pasch gültig.
+			if (paschArr[j - 1] == 3) {
+				validTOAK = true;
+			}
+		}
+
+		if (validTOAK) {
+			return sum;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private Integer calculateFourOfAKind() {
+
+		boolean validTOAK = false;
+
+		int[] paschArr = new int[6];
+		Integer sum = 0;
+
+		for (int j : wuerfelSteuerung.getAllCubeValues()) {
+			paschArr[j - 1]++;
+			sum += j;
+
+			// Wenn eine Zahl 3x vorkam, ist der Pasch gültig.
+			if (paschArr[j - 1] == 3) {
+				validTOAK = true;
+			}
+		}
+
+		if (validTOAK) {
+			return sum;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private Integer calculateFullHouse() {
+		int[] fullHouseArr = new int[6];
+
+		// Würfelaugen zählen
+		for (Integer j : wuerfelSteuerung.getAllCubeValues()) {
+			fullHouseArr[j - 1]++;
+		}
+
+		boolean valid2er = false;
+		boolean valid3er = false;
+
+		// TODO Prüfen...
+		for (Integer i : fullHouseArr) {
+			if (fullHouseArr[i] == 2) {
+				valid2er = true;
+			} else if (fullHouseArr[i] == 3) {
+				valid3er = true;
+			}
+		}
+
+		if (valid2er && valid3er) {
+			return 25;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private Integer calculateStreet1() {
+		int[] smallStreetArr = new int[6];
+
+		// Würfelaugen zählen
+		for (Integer j : wuerfelSteuerung.getAllCubeValues()) {
+			smallStreetArr[j - 1]++;
+		}
+
+		Integer startAt = 0;
+
+		// Es wurde keine 1 gewürftelt, Straße beginnt mindestens mit 2
+		if (smallStreetArr[0] == 0) {
+			startAt = 1;
+		}
+
+		// Es wurde auch keine 2 gewürfelt, Straße beginnt mindestens mit 3
+		else if (smallStreetArr[1] == 0) {
+			startAt = 2;
+		}
+
+		// Straße beginnt nicht mit 1, 2 oder 3 => Kein gültige Straße => 0
+		// Punkte
+		else if (smallStreetArr[2] == 0) {
+			return 0;
+		}
+
+		boolean validStreet = true;
+
+		for (Integer i = startAt; i < startAt + 4; i++) {
+			if (smallStreetArr[i] == 0) {
+				validStreet = false;
+			}
+		}
+
+		if (validStreet) {
+			return 30;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private Integer calculateStreet2() {
+		int[] bigStreetArr = new int[6];
+
+		// Würfelaugen zählen
+		for (Integer j : wuerfelSteuerung.getAllCubeValues()) {
+			bigStreetArr[j - 1]++;
+		}
+
+		Integer startAt = 0;
+
+		// Es wurde keine 1 gewürftelt, Straße beginnt mindestens mit 2
+		if (bigStreetArr[0] == 0) {
+			startAt = 1;
+		}
+
+		// Straße beginnt nicht mit 1 oder 2 => Kein gültige Straße => 0
+		// Punkte
+		else if (bigStreetArr[1] == 0) {
+			return 0;
+		}
+
+		boolean validStreet = true;
+
+		for (Integer i = startAt; i < startAt + 5; i++) {
+			if (bigStreetArr[i] == 0) {
+				validStreet = false;
+			}
+		}
+
+		if (validStreet) {
+			return 40;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private Integer calculateKniffel() {
+		Integer kniffelNumber = wuerfelSteuerung.getCubeValue(1);
+
+		for (Integer i : wuerfelSteuerung.getAllCubeValues()) {
+			if (i != kniffelNumber) {
+				return 0;
+			}
+		}
+
+		return 50;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private Integer calculateChance() {
+		Integer sum = 0;
+
+		// Alle Augen zählen
+		for (Integer i : wuerfelSteuerung.getAllCubeValues()) {
+			sum += i;
+		}
+
+		return sum;
+	}
+
 }

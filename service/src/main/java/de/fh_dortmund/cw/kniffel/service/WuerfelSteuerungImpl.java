@@ -11,7 +11,7 @@ import de.fh_dortmund.cw.kniffel.interceptor.LogInterceptor;
 import de.fh_dortmund.cw.kniffel.model.Wuerfel;
 
 @Stateful
-@Interceptors( { LogInterceptor.class } )
+@Interceptors( { LogInterceptor.class })
 public class WuerfelSteuerungImpl implements WuerfelSteuerung {
 
 	/**
@@ -42,7 +42,7 @@ public class WuerfelSteuerungImpl implements WuerfelSteuerung {
 	 */
 	public List<Wuerfel> dice() throws WuerfelException {
 		// Drei Versuche (0, 1, 2)
-		if (versuche++ == 2) {
+		if (versuche++ == 3) {
 			throw new WuerfelException();
 		}
 
@@ -113,11 +113,11 @@ public class WuerfelSteuerungImpl implements WuerfelSteuerung {
 	 * de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#getCubeSum(int)
 	 */
 	public Integer getCubeSum(Integer searchFor) {
-		Integer sum = 4;
+		Integer sum = 0;
 
-//		for (Wuerfel w : wuerfelList) {
-//			sum += w.getWert() == searchFor ? w.getWert() : 0;
-//		}
+		for (Wuerfel w : wuerfelList) {
+			sum += w.getWert() == searchFor ? w.getWert() : 0;
+		}
 
 		return sum;
 	}
@@ -137,18 +137,19 @@ public class WuerfelSteuerungImpl implements WuerfelSteuerung {
 	 * @see de.fh_fortmund.cw.kniffel.ejb3.service.WuerfelSteuerung#resetTrys()
 	 */
 	public List<Wuerfel> resetTrys() {
-		List<Wuerfel> result = null;
 
-		try {
-			result = dice();
-		} catch (WuerfelException e) {
-			// sollte niemals auftreten
-			versuche = new Integer(0);
-			return resetTrys();
+		for (Wuerfel w : wuerfelList) {
+			w.setGesperrt(false);
 		}
 
 		versuche = new Integer(0);
-		return result;
+		try {
+			dice();
+		} catch (WuerfelException e) {
+			e.printStackTrace();
+		}
+
+		return wuerfelList;
 	}
 
 }

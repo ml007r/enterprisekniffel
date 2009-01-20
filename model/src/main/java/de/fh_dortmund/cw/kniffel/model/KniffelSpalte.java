@@ -26,6 +26,7 @@ public class KniffelSpalte implements Serializable {
 	
 	public KniffelSpalte(Spieler spieler) {
 		this.spieler = spieler;
+		this.spieler.setSpalte(this);
 		this.zellen = new HashMap<KniffelZeile, KniffelZelle>();
 		generateMap();
 	}
@@ -41,5 +42,10 @@ public class KniffelSpalte implements Serializable {
 	protected void generateMap() {
 		for (KniffelZeile kz : KniffelZeile.values())
 			zellen.put(kz, new KniffelZelle(this, kz));
+	}
+	
+	@Override
+	public String toString() {
+		return "<KniffelSpalte: " + spieler + ">";
 	}
 }
