@@ -60,9 +60,8 @@ public interface KniffelService extends RemoteService {
 	 * @param cell
 	 * @param playerId
 	 * @return
-	 * @throws Exception 
 	 */
-	Integer getValue(KniffelZeile cell, Integer playerId) throws Exception;
+	Integer getValue(KniffelZeile cell, Integer playerId);
 
 	/**
 	 * 

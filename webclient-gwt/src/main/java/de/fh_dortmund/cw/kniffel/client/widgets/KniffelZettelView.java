@@ -194,7 +194,9 @@ public class KniffelZettelView {
 						}
 
 						public void onSuccess(Integer arg0) {
-							sumTop.setHTML("" + arg0);
+							if (arg0 > 0) {
+								sumTop.setHTML("" + arg0);
+							}
 						}
 					});
 		}
@@ -210,7 +212,9 @@ public class KniffelZettelView {
 						}
 
 						public void onSuccess(Integer arg0) {
-							bonusTop.setHTML("" + arg0);
+							if (arg0 > 0) {
+								bonusTop.setHTML("" + arg0);
+							}
 						}
 					});
 		}
@@ -226,7 +230,9 @@ public class KniffelZettelView {
 						}
 
 						public void onSuccess(Integer arg0) {
-							totalSumTop.setHTML("" + arg0);
+							if (arg0 > 0) {
+								totalSumTop.setHTML("" + arg0);
+							}
 						}
 					});
 		}
@@ -242,7 +248,9 @@ public class KniffelZettelView {
 						}
 
 						public void onSuccess(Integer arg0) {
-							sumBottom.setHTML("" + arg0);
+							if (arg0 > 0) {
+								sumBottom.setHTML("" + arg0);
+							}
 						}
 					});
 		}
@@ -254,14 +262,18 @@ public class KniffelZettelView {
 					aktuellerSpielerId, new AsyncCallback<Integer>() {
 						public void onFailure(Throwable arg0) {
 							// keine Summe vorhanden -> nichts machen
-							totalSum.setHTML("&nbsp;");
+							// totalSum.setHTML("&nbsp;");
+							totalSum.setHTML("---");
 						}
 
 						public void onSuccess(Integer arg0) {
-							totalSum.setHTML("" + arg0);
-							if (aktuellerSpielerId == widget.getColumnCount()) {
-								wuerfelView.getWidget().clear();
-								Window.alert("Alles hat ein Ende...");
+							if (arg0 > 0) {
+								totalSum.setHTML("" + arg0);
+								if (aktuellerSpielerId == widget
+										.getColumnCount()) {
+									wuerfelView.getWidget().clear();
+									Window.alert("Alles hat ein Ende...");
+								}
 							}
 						}
 					});

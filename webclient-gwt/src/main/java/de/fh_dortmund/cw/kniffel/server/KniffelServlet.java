@@ -110,9 +110,13 @@ public class KniffelServlet extends RemoteServiceServlet implements
 	 * de.fh_dortmund.cw.kniffel.client.rpc.KniffelService#getValue(de.fh_dortmund
 	 * .cw.kniffel.model.KniffelZeile, java.lang.Integer)
 	 */
-	public Integer getValue(KniffelZeile cell, Integer playerId)
-			throws Exception {
-		return kniffelSteuerung.getValue(cell, playerId);
+	public Integer getValue(KniffelZeile cell, Integer playerId) {
+		try {
+			return kniffelSteuerung.getValue(cell, playerId);
+		} catch (Exception e) {
+			return 0;
+		}
+
 	}
 
 	public Spieler getAktellerSpieler() {
