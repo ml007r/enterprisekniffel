@@ -19,7 +19,7 @@ import de.fh_dortmund.cw.kniffel.model.Spieler;
 public class KniffelZettelView {
 
 	// Muss mit KniffelZeile übereinstimmen + 1 Zeile nbsp
-	private final String[] rowTitleLabel = { "&nbsp;", "1 er", "2 er", "3 er",
+	private final String[] rowTitleLabel = { "", "1 er", "2 er", "3 er",
 			"4 er", "5 er", "6 er", "Summe (oben)", "Bonus",
 			"Gesamtsumme (oben)", "Dreierpasch", "Viererpasch", "Full House",
 			"Kleine Straße", "Große Straße", "Kniffel", "Chance",
@@ -57,7 +57,7 @@ public class KniffelZettelView {
 			}
 		});
 
-		aktuellerSpielerId = 1;
+		setSpieler();
 	}
 
 	/**
@@ -80,8 +80,19 @@ public class KniffelZettelView {
 
 					public void onSuccess(Spieler arg0) {
 						aktuellerSpielerId = arg0.getId();
-						HTML cell = (HTML) widget.getWidget(0, 0);
-						cell.setText("Spieler #" + arg0.getId());
+
+						for (int i = 0; i < rowTitleLabel.length; i++) {
+
+							int lastPlayerColumn = aktuellerSpielerId == 1 ? widget
+									.getColumnCount() - 1
+									: aktuellerSpielerId - 1;
+
+							widget.getWidget(i, lastPlayerColumn)
+									.removeStyleName("currentPlayer");
+
+							widget.getWidget(i, aktuellerSpielerId)
+									.addStyleName("currentPlayer");
+						}
 					}
 				});
 	}
@@ -148,8 +159,7 @@ public class KniffelZettelView {
 	protected void setValue(int row, int column) {
 		final HTML cell = (HTML) widget.getWidget(row, column);
 
-		// Nur wenn das Feld noch leer ist...
-		if ("&nbsp;".equalsIgnoreCase(cell.getHTML())) {
+		if ("&nbsp;".equals(cell.getHTML())) {
 			Kniffel.getKniffelService().setValue(findKniffelZeile(row),
 					new AsyncCallback<Integer>() {
 						public void onFailure(Throwable arg0) {
@@ -157,19 +167,104 @@ public class KniffelZettelView {
 						}
 
 						public void onSuccess(Integer arg0) {
-							cell.setHTML("" + arg0);
-
-							/*
-							 * wuerfelView.reinitCubes();
-							 * 
-							 * setSpielerId();
-							 */
-
-							// TODO Summenfüllung
+							cell.setText("" + arg0);
+							wuerfelView.reinitCubes();
+							writeSum();
+							setSpieler();
 						}
 					});
 		} else {
-			Window.alert("Die Zelle kann nicht ausgewählt werden!");
+			Window.alert("Diese Zelle kann nicht ausgewählt werden!");
+		}
+	}
+
+	/**
+	 * Schreibt die Summenfelder
+	 */
+	protected void writeSum() {
+
+		// Summe oben
+		final HTML sumTop = (HTML) widget.getWidget(7, aktuellerSpielerId);
+		if ("&nbsp;".equals(sumTop.getHTML())) {
+			Kniffel.getKniffelService().getValue(KniffelZeile.SUM_TOP,
+					aktuellerSpielerId, new AsyncCallback<Integer>() {
+						public void onFailure(Throwable arg0) {
+							// keine Summe vorhanden -> nichts machen
+							sumTop.setHTML("&nbsp;");
+						}
+
+						public void onSuccess(Integer arg0) {
+							sumTop.setHTML("" + arg0);
+						}
+					});
+		}
+
+		// Bonus oben
+		final HTML bonusTop = (HTML) widget.getWidget(8, aktuellerSpielerId);
+		if ("&nbsp;".equals(bonusTop.getHTML())) {
+			Kniffel.getKniffelService().getValue(KniffelZeile.BONUS_TOP,
+					aktuellerSpielerId, new AsyncCallback<Integer>() {
+						public void onFailure(Throwable arg0) {
+							// keine Summe vorhanden -> nichts machen
+							bonusTop.setHTML("&nbsp;");
+						}
+
+						public void onSuccess(Integer arg0) {
+							bonusTop.setHTML("" + arg0);
+						}
+					});
+		}
+
+		// Bonus oben
+		final HTML totalSumTop = (HTML) widget.getWidget(9, aktuellerSpielerId);
+		if ("&nbsp;".equals(totalSumTop.getHTML())) {
+			Kniffel.getKniffelService().getValue(KniffelZeile.SUM_TOP_TOTAL,
+					aktuellerSpielerId, new AsyncCallback<Integer>() {
+						public void onFailure(Throwable arg0) {
+							// keine Summe vorhanden -> nichts machen
+							totalSumTop.setHTML("&nbsp;");
+						}
+
+						public void onSuccess(Integer arg0) {
+							totalSumTop.setHTML("" + arg0);
+						}
+					});
+		}
+
+		// Summe unten
+		final HTML sumBottom = (HTML) widget.getWidget(17, aktuellerSpielerId);
+		if ("&nbsp;".equals(sumBottom.getHTML())) {
+			Kniffel.getKniffelService().getValue(KniffelZeile.SUM_BOTTOM_TOTAL,
+					aktuellerSpielerId, new AsyncCallback<Integer>() {
+						public void onFailure(Throwable arg0) {
+							// keine Summe vorhanden -> nichts machen
+							sumBottom.setHTML("&nbsp;");
+						}
+
+						public void onSuccess(Integer arg0) {
+							sumBottom.setHTML("" + arg0);
+						}
+					});
+		}
+
+		// Gesamtsumme
+		final HTML totalSum = (HTML) widget.getWidget(18, aktuellerSpielerId);
+		if ("&nbsp;".equals(totalSum.getHTML())) {
+			Kniffel.getKniffelService().getValue(KniffelZeile.SUM_TOTAL,
+					aktuellerSpielerId, new AsyncCallback<Integer>() {
+						public void onFailure(Throwable arg0) {
+							// keine Summe vorhanden -> nichts machen
+							totalSum.setHTML("&nbsp;");
+						}
+
+						public void onSuccess(Integer arg0) {
+							totalSum.setHTML("" + arg0);
+							if (aktuellerSpielerId == widget.getColumnCount()) {
+								wuerfelView.getWidget().clear();
+								Window.alert("Alles hat ein Ende...");
+							}
+						}
+					});
 		}
 	}
 

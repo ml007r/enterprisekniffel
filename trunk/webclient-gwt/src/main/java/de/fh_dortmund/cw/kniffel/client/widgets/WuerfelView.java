@@ -53,8 +53,11 @@ public class WuerfelView {
 
 			public void onSuccess(List arg0) {
 				refreshCubes((List<Wuerfel>) arg0);
+				button.setEnabled(true);
 			}
 		});
+		
+		
 	}
 
 	/**

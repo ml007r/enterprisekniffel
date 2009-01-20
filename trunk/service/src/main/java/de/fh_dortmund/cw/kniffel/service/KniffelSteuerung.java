@@ -36,7 +36,7 @@ public interface KniffelSteuerung {
 	/**
 	 * 
 	 * @return
-	 * @throws WuerfelException 
+	 * @throws WuerfelException
 	 */
 	List<Wuerfel> dice() throws WuerfelException;
 
@@ -60,89 +60,19 @@ public interface KniffelSteuerung {
 
 	/**
 	 * 
+	 * @param row
 	 * @return
 	 */
-	Integer set1er();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer set2er();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer set3er();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer set4er();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer set5er();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer set6er();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setDreierPasch();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setViererPasch();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setFullHouse();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setKleineStrasse();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setGrosseStrasse();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setKniffel();
-
-	/**
-	 * 
-	 * @return
-	 */
-	Integer setChance();
+	Integer setValue(KniffelZeile row);
 
 	/**
 	 * 
 	 * @param cell
 	 * @param playerId
 	 * @return
+	 * @throws Exception
 	 */
-	Integer getValue(KniffelZeile cell, Integer playerId);
+	Integer getValue(KniffelZeile cell, Integer playerId) throws Exception;
 
 	/**
 	 * 
