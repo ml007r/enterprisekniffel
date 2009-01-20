@@ -10,6 +10,7 @@ import javax.interceptor.Interceptors;
 import de.fh_dortmund.cw.kniffel.exceptions.WuerfelException;
 import de.fh_dortmund.cw.kniffel.interceptor.LogInterceptor;
 import de.fh_dortmund.cw.kniffel.model.KniffelZeile;
+import de.fh_dortmund.cw.kniffel.model.KniffelZelle;
 import de.fh_dortmund.cw.kniffel.model.KniffelZettel;
 import de.fh_dortmund.cw.kniffel.model.Spieler;
 import de.fh_dortmund.cw.kniffel.model.Wuerfel;
@@ -167,6 +168,17 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		throw new Exception();
 	}
 
+	/**
+	 * 
+	 * @param cell
+	 * @return
+	 */
+	private Integer getValue(KniffelZeile cell) {
+		KniffelZelle kz = spiel.getAktuellerSpieler().getSpalte()
+				.getZelle(cell);
+		return kz == null ? 0 : kz.getWert();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -205,33 +217,32 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * @throws Exception
 	 */
 	private void generateSums() {
-		Integer playerId = getAktuellerSpieler().getId();
 		try {
-			setValue(KniffelZeile.SUM_TOP, getSumTop(playerId));
+			setValue(KniffelZeile.SUM_TOP, getSumTop());
 		} catch (Exception e) {
 			// nix
 		}
 
 		try {
-			setValue(KniffelZeile.BONUS_TOP, getBonusTop(playerId));
+			setValue(KniffelZeile.BONUS_TOP, getBonusTop());
 		} catch (Exception e) {
 			// nix
 		}
 
 		try {
-			setValue(KniffelZeile.SUM_TOP_TOTAL, getSumTopTotal(playerId));
+			setValue(KniffelZeile.SUM_TOP_TOTAL, getSumTopTotal());
 		} catch (Exception e) {
 			// nix
 		}
 
 		try {
-			setValue(KniffelZeile.SUM_BOTTOM_TOTAL, getSumBottom(playerId));
+			setValue(KniffelZeile.SUM_BOTTOM_TOTAL, getSumBottom());
 		} catch (Exception e) {
 			// nix
 		}
 
 		try {
-			setValue(KniffelZeile.SUM_TOTAL, getSumTotal(playerId));
+			setValue(KniffelZeile.SUM_TOTAL, getSumTotal());
 		} catch (Exception e) {
 			// nix
 		}
@@ -243,13 +254,13 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * @return
 	 * @throws Exception
 	 */
-	private Integer getSumTop(Integer playerId) throws Exception {
-		return getValue(KniffelZeile.ONE, playerId)
-				+ getValue(KniffelZeile.TWO, playerId)
-				+ getValue(KniffelZeile.THREE, playerId)
-				+ getValue(KniffelZeile.FOUR, playerId)
-				+ getValue(KniffelZeile.FIVE, playerId)
-				+ getValue(KniffelZeile.SIX, playerId);
+	private Integer getSumTop() throws Exception {
+		return getValue(KniffelZeile.ONE)
+				+ getValue(KniffelZeile.TWO)
+				+ getValue(KniffelZeile.THREE)
+				+ getValue(KniffelZeile.FOUR)
+				+ getValue(KniffelZeile.FIVE)
+				+ getValue(KniffelZeile.SIX);
 	}
 
 	/**
@@ -258,8 +269,8 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * @return
 	 * @throws Exception
 	 */
-	private Integer getBonusTop(Integer playerId) throws Exception {
-		return getValue(KniffelZeile.SUM_TOP, playerId) > 63 ? 35 : 0;
+	private Integer getBonusTop( ) throws Exception {
+		return getValue(KniffelZeile.SUM_TOP) > 63 ? 35 : 0;
 	}
 
 	/**
@@ -268,9 +279,9 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * @return
 	 * @throws Exception
 	 */
-	private Integer getSumTopTotal(Integer playerId) throws Exception {
-		return getValue(KniffelZeile.SUM_TOP, playerId)
-				+ getValue(KniffelZeile.BONUS_TOP, playerId);
+	private Integer getSumTopTotal() throws Exception {
+		return getValue(KniffelZeile.SUM_TOP)
+				+ getValue(KniffelZeile.BONUS_TOP);
 	}
 
 	/**
@@ -279,14 +290,14 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * @return
 	 * @throws Exception
 	 */
-	private Integer getSumBottom(Integer playerId) throws Exception {
-		return getValue(KniffelZeile.THREE_OAK, playerId)
-				+ getValue(KniffelZeile.FOUR_OAK, playerId)
-				+ getValue(KniffelZeile.FULL_HOUSE, playerId)
-				+ getValue(KniffelZeile.STREET_1, playerId)
-				+ getValue(KniffelZeile.STREET_2, playerId)
-				+ getValue(KniffelZeile.YAHTZEE, playerId)
-				+ getValue(KniffelZeile.CHANCE, playerId);
+	private Integer getSumBottom() throws Exception {
+		return getValue(KniffelZeile.THREE_OAK)
+				+ getValue(KniffelZeile.FOUR_OAK)
+				+ getValue(KniffelZeile.FULL_HOUSE)
+				+ getValue(KniffelZeile.STREET_1)
+				+ getValue(KniffelZeile.STREET_2)
+				+ getValue(KniffelZeile.YAHTZEE)
+				+ getValue(KniffelZeile.CHANCE);
 	}
 
 	/**
@@ -295,9 +306,9 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 	 * @return
 	 * @throws Exception
 	 */
-	private Integer getSumTotal(Integer playerId) throws Exception {
-		return getValue(KniffelZeile.SUM_TOP_TOTAL, playerId)
-				+ getValue(KniffelZeile.SUM_BOTTOM_TOTAL, playerId);
+	private Integer getSumTotal() throws Exception {
+		return getValue(KniffelZeile.SUM_TOP_TOTAL)
+				+ getValue(KniffelZeile.SUM_BOTTOM_TOTAL);
 	}
 
 	/**
@@ -372,10 +383,10 @@ public class KniffelSteuerungImpl implements KniffelSteuerung {
 		boolean valid3er = false;
 
 		// TODO Prüfen...
-		for (Integer i : fullHouseArr) {
-			if (fullHouseArr[i] == 2) {
+		for (int i : fullHouseArr) {
+			if (i == 2) {
 				valid2er = true;
-			} else if (fullHouseArr[i] == 3) {
+			} else if (i == 3) {
 				valid3er = true;
 			}
 		}
